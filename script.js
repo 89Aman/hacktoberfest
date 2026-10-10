@@ -429,14 +429,14 @@ function initNavbarScrollSpy() {
 
   // Button label mappings per section
   const ctaConfigs = {
-    hero: { label: "Simulate a Disruption", target: "#simulator", isRun: false },
-    problem: { label: "Simulate a Disruption", target: "#simulator", isRun: false },
+    hero: { label: "Simulate a Disruption", target: "https://hacktoberfest-592636097524.europe-west1.run.app/", isRun: false },
+    problem: { label: "Simulate a Disruption", target: "https://hacktoberfest-592636097524.europe-west1.run.app/", isRun: false },
     features: { label: "Pick Your Role", target: "#final-cta", isRun: false },
     "how-it-works": { label: "See the Simulator", target: "#simulator", isRun: false },
     simulator: { label: "Run the Demo", target: null, isRun: true },
     "why-us": { label: "Read the Docs", target: "#docs", isRun: false },
-    docs: { label: "Launch Demo", target: "#final-cta", isRun: false },
-    "final-cta": { label: "Simulate Disruption", target: "#simulator", isRun: false },
+    docs: { label: "Launch Demo", target: "https://hacktoberfest-592636097524.europe-west1.run.app/", isRun: false },
+    "final-cta": { label: "Simulate Disruption", target: "https://hacktoberfest-592636097524.europe-west1.run.app/", isRun: false },
     footer: { label: "Back to Top", target: "#hero", isRun: false }
   };
 
@@ -554,6 +554,10 @@ function initNavbarScrollSpy() {
             runBtn.scrollIntoView({ behavior: "smooth", block: "center" });
             runBtn.click();
           }
+        } else if (config.target && config.target.startsWith("http")) {
+          // Open external deployment in a new tab
+          e.preventDefault();
+          window.open(config.target, "_blank", "noopener,noreferrer");
         } else if (config.target) {
           e.preventDefault();
           const targetElem = document.querySelector(config.target);
