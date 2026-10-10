@@ -1,0 +1,29 @@
+.git
+.gitignore
+.venv
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local sensitive env files
+.env
+*.env
+backend/.env
+frontend/.env
+
+# Node local modules
+frontend/node_modules/
+frontend/dist/
+node_modules/
+
+# Miscellaneous
+*.pptx
+ideas/
+.DS_Store
+Thumbs.db
