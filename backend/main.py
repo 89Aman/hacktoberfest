@@ -307,9 +307,34 @@ def reset_schedule():
     })
     return {"status": "reset", "message": "Schedule restored to seeded baseline."}
 
+# ----------------- Production Static SPA Frontend -----------------
+dist_dir = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if not dist_dir.exists():
+    dist_dir = Path(__file__).resolve().parent / "static"
+
+if dist_dir.exists():
+    from fastapi.staticfiles import StaticFiles
+    from starlette.responses import FileResponse
+
+    assets_dir = dist_dir / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        if full_path.startswith("api"):
+            raise HTTPException(status_code=404, detail="API route not found")
+        file_path = dist_dir / full_path
+        if file_path.is_file():
+            return FileResponse(file_path)
+        index_file = dist_dir / "index.html"
+        if index_file.is_file():
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Index file not found")
+
 if __name__ == "__main__":
     import uvicorn
     host = os.getenv("HOST", "0.0.0.0")
-    port = int(os.getenv("PORT", "8000"))
+    port = int(os.getenv("PORT", "8080"))
     uvicorn.run("backend.main:app", host=host, port=port, reload=True)
 
