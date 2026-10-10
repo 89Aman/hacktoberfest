@@ -1,0 +1,15 @@
+.git
+.gitignore
+.DS_Store
+backend/
+frontend/
+docs/
+scripts/
+skills/
+stitch_campus_rescue_landing_page/
+*.md
+*.pptx
+requirements.txt
+.env*
+Dockerfile*
+docker-compose*
