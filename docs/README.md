@@ -1,32 +1,20 @@
-# Campus Rescue — Documentation Index
+# Campus Rescue — Complete Engineering & Product Documentation Index
 
-Welcome to the comprehensive documentation suite for **Campus Rescue**, the neuro-symbolic campus schedule repair platform powered by Google Gemma and Z3 SMT constraint solving.
-
----
-
-## Documentation Suite
-
-1. **[Landing Page Specification](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/LANDING_PAGE_SPEC.md)**
-   - Complete page structure, hero section, interactive simulator preview.
-   - Target audience value propositions for **Students**, **Faculty**, and **Super Admins**.
-   - Technical comparison: Naive LLM vs. Campus Rescue.
-   - UI component design tokens and responsive layout.
-
-2. **[User Personas & Role-Based Workflows](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/USER_PERSONAS_AND_ROLES.md)**
-   - In-depth workflows for all three user types:
-     - **Student:** Live room discovery, verified clash-free schedule, personalized calendar subscriptions.
-     - **Faculty:** Natural-language delay reporting, protected exam flags, slot preference negotiation.
-     - **Super Admin:** Emergency disruption console, constraint relaxation overrides, Z3 conflict core analysis, campus-wide broadcast.
-   - Role-Based Access Control (RBAC) permission matrix.
-
-3. **[System Architecture & Technical Specification](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/SYSTEM_ARCHITECTURE.md)**
-   - End-to-end technical pipeline: Natural language → Gemma AST → Z3 SMT solver → Independent validator → UI diff.
-   - Formal mathematical formulation of hard constraints and lexicographic objectives.
-   - Unsat core diagnostics for impossible disruptions.
-   - API schema and data models.
+**Campus Rescue:** Neuro-symbolic campus schedule repair platform powered by Google Gemma 2 and Z3 SMT constraint solving.
 
 ---
 
-## Core Product Thesis
+## Complete Documentation Index
 
-Most campus software generates a static timetable at the start of a semester. **Campus Rescue fixes the day when unexpected reality hits**—without hallucinations, without double-bookings, and while changing the fewest possible events.
+### 1. Product & Architecture Core
+- **[PRD.md](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/PRD.md)** — Product Requirements Document: Problem, goals, user stories, functional and non-functional requirements.
+- **[TRD.md](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/TRD.md)** — Technical Requirements Document: Gemma 2 prompts, Z3 mathematical formulations, independent validator rules, latency and memory budgets.
+- **[SYSTEM_FLOW_AND_ARCHITECTURE.md](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/SYSTEM_FLOW_AND_ARCHITECTURE.md)** — End-to-end layered architecture, sequence diagrams, Finite State Machine, and failure fallback modes.
+
+### 2. Database & Data Contracts
+- **[SCHEMA_DB.md](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/SCHEMA_DB.md)** — Database Schema & SQL DDL: Entity relationships (ERD), full SQL schemas for SQLite/PostgreSQL, indexes, and constraints.
+
+### 3. User Experience & Flows
+- **[APP_FLOW.md](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/APP_FLOW.md)** — Application Flow & Wireframes: Step-by-step user pathways for Student, Faculty, and Super Admin.
+- **[USER_PERSONAS_AND_ROLES.md](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/USER_PERSONAS_AND_ROLES.md)** — Role-Based Access Control (RBAC) matrix and persona profiles.
+- **[LANDING_PAGE_SPEC.md](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/LANDING_PAGE_SPEC.md)** — Complete landing page specification: Hero copy, interactive disruption simulator widget, and comparison matrix.
