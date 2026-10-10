@@ -72,24 +72,6 @@ cp frontend/.env.example frontend/.env
 ```
 *(If no API key or Supabase credentials are provided, Campus Rescue runs in **Structured Fallback Mode** with the in-memory store).*
 
-### 4. Run the Application
-
-**Run Backend (FastAPI + Z3 SMT Engine):**
-```bash
-python -m backend.main
-# Or: uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
-```
-API docs available at: `http://localhost:8000/docs`
-
-**Run Frontend (Vite + React):**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Access UI at: `http://localhost:5173`
-
----
 
 ## 📖 Complete Documentation Index
 
