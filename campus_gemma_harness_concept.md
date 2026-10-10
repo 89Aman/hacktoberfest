@@ -1,7 +1,7 @@
 # Project Concept Document: Gemma + Deterministic Harness for Campus Problems
 
 **Document Type:** Technical Concept Note & Architecture Specification  
-**Model Family:** Google Gemma 2 (2B / 9B) & Open-Weights Ecosystem  
+**Model Family:** Google Gemma 4 (2B / 9B) & Open-Weights Ecosystem  
 **Target Domain:** Campus Logistics, Hard Combinatorial Coordination & Systems Engineering  
 **Core Technical Differentiator:** Neuro-Symbolic Verification and Closed-Loop Dynamic Execution (Beyond "Vibe Coding" LLM Wrappers)
 
@@ -27,7 +27,7 @@ A standard LLM wrapper relies on the model to "hallucinate" an answer. In contra
                                       │
                                       ▼
                        ┌──────────────────────────────┐
-                       │      Gemma 2 (Parser)        │
+                       │      Gemma 4 (Parser)        │
                        │ Translates to Formal AST/SMT │
                        └──────────────┬───────────────┘
                                       │
@@ -67,7 +67,7 @@ Hostel room allotment, elective scheduling, lab machinery bookings, and exam tim
 ### 3.2 System Architecture
 * **Frontend/Interface:** Web or CLI intake collecting instructor and department constraints in raw text.
 * **Gemma Semantic Compiler:**
-  * Model: `gemma-2-9b-it` (or `gemma-2-2b-it` via GGUF/llama.cpp).
+  * Model: `gemma-4-26b-a4b-it` (or `gemma-4-2b-it` via GGUF/llama.cpp).
   * Task: Converts natural language rules into structured JSON AST representing variables, domains, and predicates.
 * **The Z3 SMT Harness:**
   * Ingests the AST and builds formal integer arithmetic and boolean assertions in Z3 (`z3-solver` Python runtime).
@@ -113,7 +113,7 @@ Hostel room allotment, elective scheduling, lab machinery bookings, and exam tim
 ### Concept C: "CampusMesh-Sentinel" Offline Emergency Triage Node
 * **Problem:** Severe weather, network fiber cuts, or power outages knock out campus cloud infrastructure. Student hostels require coordination for medical help, water shortages, or generator rationing without internet access.
 * **The Harness:**
-  * Runs quantized `gemma-2-2b-it` (Q4_K_M GGUF) locally on an offline single-board computer or laptop (requiring < 1.8 GB RAM).
+  * Runs quantized `gemma-4-2b-it` (Q4_K_M GGUF) locally on an offline single-board computer or laptop (requiring < 1.8 GB RAM).
   * Serves an ad-hoc local Wi-Fi / Bluetooth peer-to-peer queue.
 * **Gemma Role:** Ingests unstructured, fragmented student messages, deduplicates redundant reports, scores urgency, and synthesizes a priority action manifest for campus response teams with zero cloud connectivity.
 
@@ -123,7 +123,7 @@ Hostel room allotment, elective scheduling, lab machinery bookings, and exam tim
 
 | Layer | Component | Specification |
 | :--- | :--- | :--- |
-| **Model** | Google Gemma 2 | `gemma-2-2b-it` (Edge/Low-spec) or `gemma-2-9b-it` (High precision) |
+| **Model** | Google Gemma 4 | `gemma-4-2b-it` (Edge/Low-spec) or `gemma-4-26b-a4b-it` (High precision) |
 | **Inference Engine** | `llama.cpp` / `vLLM` / `Ollama` | Local GGUF execution; 4-bit to 8-bit quantization |
 | **Harness Core** | Python 3.10+ | Custom deterministic state machine (`pydantic`, `asyncio`) |
 | **Verification Engines**| `z3-solver` / AddressSanitizer | Formal logic proofs, SMT constraint solving, or Clang toolchains |
@@ -158,4 +158,4 @@ Hostel room allotment, elective scheduling, lab machinery bookings, and exam tim
 When presenting this project to judges, professors, or evaluators:
 1. **Highlight the Failure of Naive AI:** Live-demo an off-the-shelf chatbot failing an impossible scheduling problem by hallucinating a non-existent room or overlapping timeslot.
 2. **Demonstrate Mathematical Guarantee:** Show the Z3 solver proving why the schedule is clash-free.
-3. **Emphasize Local Capability:** Emphasize that Gemma 2 runs cost-effectively and privately on local or edge hardware, without external cloud dependence or data leaks.
+3. **Emphasize Local Capability:** Emphasize that Gemma 4 runs cost-effectively and privately on local or edge hardware, without external cloud dependence or data leaks.

@@ -143,5 +143,5 @@ A direct, eye-opening comparison table demonstrating why campus logistics cannot
 - **Primary Banner:** *"Ready to eliminate campus timetable chaos?"*
 - **Action Buttons:** `Launch Local Prototype` | `Read Technical Paper`
 - **Footer Links:** 
-  - Documentation: [User Personas](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/USER_PERSONAS_AND_ROLES.md) | [System Architecture](file:///c:/Users/shasa/Projects/Hacktoberfest-iitb/Hackathon/docs/SYSTEM_ARCHITECTURE.md)
-  - Open Source: Built for Hacktoberfest IITB & Google Gemma Open-Weights Challenge.
+  - Documentation: [User Personas](USER_PERSONAS_AND_ROLES.md) | [System Architecture](SYSTEM_ARCHITECTURE.md)
+  - Open Source: Built for Hacktoberfest IITB & Google Gemma 4 Challenge.

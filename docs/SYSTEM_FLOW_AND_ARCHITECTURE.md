@@ -17,7 +17,7 @@ graph TB
 
     subgraph IngestionLayer["Ingestion & Semantic Translation Layer"]
         InputHandler["Input Normalizer & Disruption Handler"]
-        GemmaAdapter["Gemma 2 Open-Weights LLM Adapter"]
+        GemmaAdapter["Gemma 4 Open-Weights LLM Adapter"]
         PydanticValidator["Pydantic Schema Guard (Discriminated Unions)"]
     end
 

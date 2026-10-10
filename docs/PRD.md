@@ -1,117 +1,119 @@
 # Product Requirements Document (PRD) — Campus Rescue
 
 **Project Name:** Campus Rescue  
-**Document Version:** 1.0  
+**Document Version:** 2.0  
 **Target Delivery:** Hacktoberfest IITB / Campus Gemma Hackathon  
-**Target Users:** Students, Faculty, Super Admin (Campus Operations / Academic Coordinators)
+**Target Users:** Students, Faculty, Event Organizers, Super Admins (Operations / Timetable Coordinators)
 
 ---
 
-## 1. Executive Summary
+## 1. Unified Product Definition
 
-Campus scheduling is volatile. Unexpected disruptions—water leaks in laboratories, equipment malfunctions, sudden attendance surges, faculty transit delays—break pre-arranged schedules. Moving one event manually creates cascading conflicts. 
+> **Campus Rescue** allows campus users (students, faculty, club leads) to request rooms for events using natural language. It finds a verified, conflict-free room and time, and allows administrators to review, approve, or repair the schedule when disruptions occur. If an administrator does not act within **2 hours**, the system automatically assigns the optimal verified slot and notifies both requester and administrator.
 
-**Campus Rescue** is a neuro-symbolic platform that repairs campus daily schedules under disruptions. It combines **Google Gemma 2** for natural-language semantic parsing with the **Z3 SMT solver** for deterministic constraint satisfaction and lexicographic delta minimization.
+### Core Workflow
+```
+User Request (Plain English or Form)
+       │
+       ▼
+Gemma 4 Semantic Parser (Extracts Constraints & Preferences)
+       │
+       ▼
+Z3 SMT Solver (Finds Valid Slots / Minimal Disruption Repair)
+       │
+       ▼
+Admin Approval Gate (2-Hour Auto-Approval SLA Timeout)
+       ├── Approved within 2h ──> Schedule Published
+       ├── 2h Timeout Reached ──> Auto-Assigned Best Slot & Published
+       └── Rejected/Modified   ──> Requester Notified with Alternative
+       │
+       ▼
+Schedule Published & Affected Users Notified (.ics & Toast/Alert Feed)
+```
 
 ---
 
-## 2. Problem Statement & User Pain Points
+## 2. Target Personas & Core Use Cases
 
-| Role | Current Pain Points | Desired Outcome |
+| Persona | Primary Goal | Key Interaction |
 | :--- | :--- | :--- |
-| **Student** | Shows up to closed or relocated rooms; relies on unverified WhatsApp rumor chains; workshops land in rooms without required kits. | Immediate access to verified daily schedule; 1-click calendar sync; guaranteed equipment match. |
-| **Faculty** | Unforeseen delays force manual rescheduling through administrative bureaucracy; fear that critical exams or vivas will be bumped. | Voice/text delay logging in plain English; one-toggle `PROTECTED` status on exam slots; zero double-booking. |
-| **Super Admin** | Sudden room shutdowns cause chaos across 50+ classes; manual swaps create hidden overlaps; generic AI chatbots hallucinate fake solutions. | Instant disruption intake; mathematically proven minimal-change repair; transparent explanations of infeasibility. |
+| **Student / Club Lead** | Book room for workshop, hackathon, or meeting without manual register hassle. | Submits room request in English or structured form; receives instant verified slot recommendation; gets notified when approved. |
+| **Faculty / Instructor** | Reserve lab/hall for class, exam, or viva; protect high-stakes tests from being bumped. | Requests rooms; marks exams as `PROTECTED`; logs delays in natural language. |
+| **Super Admin / Coordinator** | Maintain conflict-free campus spaces; handle emergency closures; manage requests queue. | One-click approve/reject/edit queue; handles room closures; auto-fallback commits unattended requests after 2 hours. |
 
 ---
 
-## 3. Product Goals & Success Metrics
+## 3. Booking Request Entity & Fields
 
-### Primary Goals
-1. **Zero Hallucination:** Every proposed repair is mathematically verified against hard capacity, equipment, supervisor, and time constraints before presentation.
-2. **Minimal Schedule Disruption:** Prioritize moving the fewest events first, followed by minimizing total minute displacements.
-3. **Transparent Infeasibility Handling:** When a conflict is mathematically impossible (`UNSAT`), isolate the conflicting constraints instead of corrupting data.
-4. **Sub-Second Repair Latency:** Solve bounded daily campus instances ($< 50$ events) in under 2 seconds.
+User booking requests accept both natural language and structured form inputs:
 
-### Success Metrics
-- **Verification Rate:** 100% of generated repairs pass independent zero-trust constraint validation.
-- **Displacement Reduction:** $\ge 80\%$ fewer displaced students compared to complete timetable recalculation.
-- **Coordinator Time Saved:** Reduce emergency room reshuffling time from 45 minutes to under 30 seconds.
+- **Event Name:** Display title (e.g., "Robotics Hands-on Workshop").
+- **Event Type:** `class` | `lab` | `workshop` | `hackathon` | `cultural_event` | `exam`.
+- **Date & Duration:** Date, duration in slots (30-minute intervals).
+- **Attendee Count:** Expected attendance (positive integer).
+- **Required Equipment:** Set of flags (`projector`, `computers`, `electronics_kits`, `audio_system`).
+- **Setup & Cleanup Buffers:** Optional 30-minute buffer slots before and after events.
+- **Preferred Time:** Target start slot, or toggle *"Suggest the best available time"*.
+- **Priority & Accessibility:** `low` | `medium` | `high` | `protected_exam`; optional wheelchair/ground-floor access flag.
+- **Status Lifecycle:** `pending` ➔ `proposed` ➔ `approved` (or `auto_approved`) | `rejected` | `cancelled`.
 
 ---
 
-## 4. User Personas & Permissions
+## 4. The 2-Hour Auto-Approval SLA Policy
 
-### 4.1 Student
-- **Access Level:** Read-Only + Subscription.
-- **Actions:** View live timetable, filter by department/room, check equipment tags, subscribe to live iCal (`.ics`) feed, report broken equipment or locked doors.
-
-### 4.2 Faculty / Mentor
-- **Access Level:** Semi-Privileged.
-- **Actions:** View assigned sessions, submit personal availability adjustments or delays in plain English (e.g., *"Arriving 40 mins late today"*), mark personal lab assessments as `PROTECTED`, review proposed slot moves before commit.
-
-### 4.3 Super Admin / Coordinator
-- **Access Level:** Full Administrative Control.
-- **Actions:** Ingest campus-wide disruptions (e.g., *"Close Lab A after 2 PM"*), inspect Z3 optimization plans, review `UNSAT` conflict cores, relax non-critical constraints when needed, commit verified repairs, dispatch campus alerts.
+To prevent campus scheduling bottlenecks caused by unavailable coordinators:
+1. When a booking request is submitted, Z3 immediately solves for the highest-ranked feasible slot and marks the request as `proposed`.
+2. A **2-Hour SLA Countdown Timer** is attached to the proposal.
+3. If the coordinator manually approves, rejects, or modifies the proposal, the manual decision takes immediate effect.
+4. If the timer expires (2 hours elapsed with status still `proposed`):
+   - The engine automatically transitions status to `auto_approved`.
+   - The proposed room and time are committed to the active schedule.
+   - An audit notification is dispatched to both the requester and administrator:  
+     *`"Auto-Approved: 'Robotics Workshop' assigned to Maker Lab D at 14:00 (Admin 2-hr SLA expired)."`*
 
 ---
 
 ## 5. Functional Requirements
 
-### 5.1 Disruption Ingestion (FR-1)
-- The system must accept natural language input from Super Admins and Faculty.
-- Supported operations:
-  - `close_room(room_id, start_slot, end_slot)`
-  - `change_attendance(event_id, new_attendance)`
-  - `delay_supervisor(supervisor_id, available_after_slot)`
-  - `protect_event(event_id)`
-- Gemma parses user requests into a validated Pydantic JSON AST.
-- If input is ambiguous or unsupported, the system must trigger a single structured clarification prompt rather than guessing.
+### 5.1 Request Intake & Semantic Parsing (FR-1)
+- Natural language requests parsed by **Gemma 4** (`gemma-4-26b-a4b-it` via API or local open-weights).
+- Extracts event type, attendance, duration, equipment tags, preferred time.
+- If required details are missing, system returns a single structured clarification prompt.
+- **Structured Fallback:** If Gemma 4 is offline, UI provides standard form intake with zero loss of scheduling functionality.
 
-### 5.2 Deterministic SMT Engine (FR-2)
-- Engine must enforce all hard constraints:
-  - Room domain, room hours, room capacity $\ge$ event attendance.
+### 5.2 Deterministic SMT Constraint Engine (FR-2)
+- Time domain: **30-minute slots from 09:00 to 18:00** (18 discrete half-hour slots per day).
+- Hard Constraints enforced:
+  - Room capacity $\ge$ attendance.
   - Required equipment $\subseteq$ room equipment.
-  - No two events in the same room overlap.
-  - No two events with the same supervisor overlap.
-  - No event in a closed room during closure interval.
-  - Protected events must retain original start time and original room.
-- Engine must optimize via lexicographic ordering:
-  1. Minimize count of altered events ($\text{room} \ne \text{orig\_room} \lor \text{start} \ne \text{orig\_start}$).
-  2. Minimize total minute displacement.
-  3. Minimize room changes.
+  - No two events overlap in the same room.
+  - Room open hours respected.
+  - Events sharing a supervisor or required instructor do not overlap.
+  - Room closures strictly observed.
+  - `PROTECTED` events are immutable in room and time.
+- Setup and cleanup buffer slots enforced for workshops and hackathons.
 
-### 5.3 Infeasibility & Conflict Diagnostics (FR-3)
-- If constraints cannot be satisfied, engine must output `status: infeasible`.
-- Engine must extract the Minimal Unsatisfiable Core (MUC) using `assert_and_track()`.
-- System must map conflict labels to human-readable explanations (e.g., *"Cannot place 45 students in Maker Lab D because maximum capacity is 35"*).
+### 5.3 Best-Alternative & Lexicographic Ranking (FR-3)
+- When evaluating requests or disruptions, Z3 optimizes sequentially:
+  1. Minimize count of changed/displaced existing events.
+  2. Minimize time difference from preferred start slot.
+  3. Prefer current room before suggesting alternative rooms.
+- Provides a clear **"Why this slot?"** explanation card:
+  > *"Recommended Maker Lab D at 14:00 because it seats 35, includes electronics kits, is free for 2 hours, and avoids moving any existing event."*
 
-### 5.4 Zero-Trust Independent Validation (FR-4)
-- A standalone pure-Python validator must execute on the solver's candidate plan.
-- The plan will not be displayed as valid unless 100% of mathematical checks pass.
+### 5.4 Infeasibility & Conflict Explanation (FR-4)
+- When a request or disruption cannot be satisfied under hard constraints, engine returns `status: infeasible`.
+- Uses Z3 `unsat_core()` to identify the conflicting constraints.
+- UI displays a clear explanation of conflicting rules (e.g., *"Cannot host 45 attendees because no open room with electronics kits exceeds capacity 35"*).
 
-### 5.5 Schedule Diff & Commit Workflow (FR-5)
-- UI must render a before/after diff table highlighting only changed rows.
-- Unchanged rows must be visibly flagged as `Retained`.
-- Schedule updates persist only after explicit coordinator confirmation (`Apply Repair`).
-
-### 5.6 Real-Time Notification & Export (FR-6)
-- Provide one-click `.ics` calendar file download and subscription endpoint.
-- Provide structured webhook payload for student WhatsApp / SMS / Email gateways.
+### 5.5 Schedule Diff & Audit Trail (FR-5)
+- Renders before/after diff for emergency repairs, showing relocated vs retained events.
+- Audit panel tracks: requester, approver (manual vs auto-approved), moved events, and reasoning.
 
 ---
 
-## 6. Non-Functional Requirements
+## 6. Non-Functional Goals & Guardrails
 
-- **Performance:** Sub-2-second end-to-end processing (LLM extraction + SMT solve) on local consumer hardware.
-- **Offline Reliability:** Must support structured fallback buttons if local LLM service is offline.
-- **Privacy & Security:** Complete local data execution; zero schedule or personnel data sent to external cloud APIs.
-- **Auditability:** Complete timestamped audit log of all applied disruptions and solver outputs.
-
----
-
-## 7. Out of Scope for MVP
-
-- Multi-semester curriculum timetabling.
-- Automated classroom electronic lock integrations.
-- Multi-campus cross-city transit calculations.
+- **Solve Latency Goal:** Target sub-2-second Z3 solution for daily campus schedules ($< 50$ events).
+- **Accuracy Guarantee:** 100% of published schedules must pass independent zero-trust pure-Python validation.
+- **Fail-Safe UI:** Distinct labels for `Live Gemma 4` vs `Structured Fallback`. Never misrepresent mock output as model inference.

@@ -1,138 +1,113 @@
-# Application Flow & UX Pathways (App Flow) — Campus Rescue
+# Application Flow & UX Specification (App Flow) — Campus Rescue
 
-This document maps the user interaction flows, state transitions, and UI wireframe pathways for all three user roles: **Student**, **Faculty**, and **Super Admin**.
+**UX Model:** Unified 3-Tab Single-Page Reactive Application  
+**Framework:** Streamlit (Python) with live state persistence  
 
 ---
 
-## 1. High-Level Navigation Architecture
+## 1. Application Layout & Tab Architecture
 
-```mermaid
-graph TD
-    Home["Landing Page & Live Disruption Simulator"]
-    
-    Home --> StudentPortal["Student Live Portal (Public / Read-Only)"]
-    Home --> FacultyConsole["Faculty Console (Semi-Privileged)"]
-    Home --> AdminConsole["Super Admin Operations HQ (Full Control)"]
-    
-    StudentPortal --> SubCalendar["1-Click Calendar Subscription (.ics)"]
-    StudentPortal --> RoomStatus["Room Hardware & Equipment Explorer"]
-    
-    FacultyConsole --> SessionProtect["Lock / Protect Critical Sessions"]
-    FacultyConsole --> DelayReport["Natural Language Delay Submission"]
-    DelayReport --> PreviewAST["Preview Interpreted Delay AST"]
-    
-    AdminConsole --> DisruptionDesk["Emergency Disruption Intake"]
-    DisruptionDesk --> SolverTrigger["Run Z3 SMT Optimization"]
-    SolverTrigger --> SATDiff["SAT: Before/After Diff Preview"]
-    SolverTrigger --> UNSATDiagnostic["UNSAT: Minimal Conflict Diagnostic"]
-    SATDiff --> ApplyBroadcast["Apply Repair & Campus Broadcast"]
+The UI is streamlined into three high-impact tabs:
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ Header: Campus Rescue  [Live Gemma 4 / Structured Mode]  [Current Time] │
+├────────────────────────────────────────────────────────────────────────┤
+│ [ Tab 1: Request a Room ]  │  [ Tab 2: Live Schedule ]  │  [ Tab 3: Admin Console ] │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 2. Student Interaction Flow
+## 2. Tab 1: Request a Room (General User Portal)
+
+Built for students, club organizers, and instructors to book campus spaces.
 
 ```
-[Screen S1: Public Day Schedule]
-       │
-       ├──> Filter by Department / Room / Time
-       │
-       ├──> Click "Subscribe to Calendar" ──> [Modal: Copy .ics URL or Download]
-       │
-       └──> Tap on Relocated Event ──> [Card: Room change notice & hardware tags]
+┌──────────────────────────────────────────────────────────────┐
+│ [Left: Request Form]           │ [Right: Proposed Allocation]│
+│ - Natural Language or Inputs:  │                             │
+│   "Need a room for 35 people   │ ✓ Verified Slot Found       │
+│    for 2h robotics workshop    │ Room: Maker Lab D           │
+│    with electronics kits"      │ Time: 14:00 – 16:00 (2 hrs) │
+│ - Event Type: Workshop         │ Equipment: [kits] [projector│
+│ - Attendance: 35               │                             │
+│ - Equipment checkboxes         │ ─── Explanation Card ────── │
+│ - Preferred Time (or Best)     │ "Recommended Maker Lab D at │
+│ - Setup Buffer: [30m toggle]   │  14:00 because it seats 35, │
+│                                │  includes electronics kits, │
+│ [Submit Request Button]        │  and avoids moving events." │
+│                                │                             │
+│                                │ Status: Proposed to Admin   │
+│                                │ (Auto-approves in 2 hrs)    │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### Screen S1 Details:
-- **Header:** Today's Date, Active Status: `Campus Schedule Verified`.
-- **Event List Item:**
-  - `Robotics Workshop`
-  - Badge: `Relocated ➔ Maker Lab D` (Golden highlight badge).
-  - Time: `14:00 - 16:00`.
-  - Equipment tags: `[electronics_kits]` `[projector]`.
-  - Supervisor: `Prof. Rao`.
-- **Sticky Footer Action:** `Subscribe to Live Calendar Feed (.ics)`.
+### User Journey
+1. User types in plain English or fills the structured dropdown form.
+2. In **Live Mode**, Gemma 4 extracts constraints into JSON. In **Fallback Mode**, standard form values are ingested directly.
+3. The SMT solver identifies the best vacant slot and displays the **"Why this slot?"** explanation card.
+4. User clicks **"Submit Request"** ➔ Status enters `proposed`, and the 2-hour SLA countdown begins.
 
 ---
 
-## 3. Faculty Interaction Flow
+## 3. Tab 2: Live Schedule (Public Timetable View)
+
+Built for campus-wide visibility (Students & Faculty).
 
 ```
-[Screen F1: My Assigned Sessions]
-       │
-       ├──> Toggle "PROTECTED" lock on Exam / Viva
-       │
-       └──> Tap "Report Availability / Delay"
-                 │
-                 ▼
-       [Screen F2: Natural Language Delay Intake]
-       (Input: "I am delayed and can supervise only after 3:15 PM")
-                 │
-                 ▼
-       [Screen F3: Interpretation Preview]
-       (Shows: Gemma parsed slot 12 / 15:00 boundary)
-                 │
-                 ├──> Confirms ──> Pushed to Admin Disruption Queue
-                 └──> Edits ────> Re-parse
+┌──────────────────────────────────────────────────────────────┐
+│ Date: Today  |  Filter: [All Rooms] [Only Relocated Events]  │
+├──────────────────────────────────────────────────────────────┤
+│ 09:00 - 18:00 Grid (18 Slots x 4 Seeded Rooms):              │
+│                                                              │
+│ [Robotics Lab A]   [Computer Lab B]  [Seminar C]  [Maker D]  │
+│ 09:00 - 10:00      Design Session                            │
+│ 10:00 - 11:00                                                │
+│ 13:00 - 14:00                                     Maker Intro│
+│ 14:00 - 16:00      Coding Exam [🔒]               Robotics*  │
+│                                                              │
+│ * Badge: Relocated to Maker Lab D (Reason: AC leak in Lab A) │
+├──────────────────────────────────────────────────────────────┤
+│ [Download .ics Calendar]   [Subscribe to WhatsApp Alerts]    │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### Screen F1 Details:
-- Displays only sessions where `supervisor_id == current_user`.
-- Next to each high-stakes event, a padlock icon: **`[Locked: Protected]`**. Protected events are guaranteed never to move during automatic repairs.
+### Key Elements:
+- **30-Minute Grid:** 09:00 to 18:00 half-hour blocks.
+- **Relocation Badges:** Clearly highlights if an event was relocated from its original venue.
+- **Protected Badge:** Shows `[🔒 PROTECTED]` for exams or locked lectures.
 
 ---
 
-## 4. Super Admin Interaction Flow (Core Control Loop)
+## 4. Tab 3: Admin Console (Operations & Emergency Desk)
+
+Built for campus coordinators and administrators.
 
 ```
-[Screen A1: Operations Command Center]
-       │
-       ├──> [Panel 1]: Current Day Schedule Grid (4 Rooms x 16 Slots)
-       │
-       └──> [Panel 2]: Emergency Disruption Desk
-                 │
-                 ├── Type Natural Language: "Lab A flooded after 2 PM"
-                 │   OR Select Preset Button [Preset 1: Room Closure]
-                 │
-                 ▼
-       [Screen A2: Interpretation & Confirmation Gate]
-       (Gemma outputs allowlisted JSON: close_room lab_a [10..16])
-                 │
-                 ├── [Confirm & Run Solver]
-                 └── [Reject / Edit Request]
-                 │
-                 ▼
-       [Screen A3: Solver Evaluation Engine]
-                 │
-                 ├─── If Feasible (SAT) ──────────────────────────────┐
-                 │                                                    │
-                 ▼                                                    ▼
-       [Screen A4: SAT Diff Inspection]              [Screen A5: UNSAT Conflict Arbiter]
-       - Events Changed: 1                           - Status: Infeasible under hard rules
-       - Total Minutes Displaced: 0                  - Conflicting Core: [Room Closure, Capacity]
-       - Validator: 8/8 checks PASSED                - Propose Rule Relaxation:
-       - Side-by-side comparison table                 (e.g., "Allow Maker Lab D capacity 40?")
-                 │                                                    │
-                 ├── [Apply Repair & Broadcast] ──> State Updated     └── [Modify Disruption]
-                 └── [Discard Proposal] ─────────> State Reverted
+┌──────────────────────────────────────────────────────────────┐
+│ Section A: Pending Booking Requests & 2-Hour SLA Queue       │
+│ ┌──────────────────────────────────────────────────────────┐ │
+│ │ "Robotics Workshop" | 35 Seats | Proposed: Lab D (14:00) │ │
+│ │ SLA Remaining: 01h:42m [Auto-approves if unreviewed]     │ │
+│ │ Actions: [Approve Now]  [Edit Slot]  [Reject]            │ │
+│ └──────────────────────────────────────────────────────────┘ │
+│ [Simulate 2-Hour SLA Timeout (Demo Test Button)]             │
+├──────────────────────────────────────────────────────────────┤
+│ Section B: Emergency Disruption Desk                         │
+│ - Natural Language Input: "Lab A flooded after 2 PM"         │
+│ - Quick Preset Buttons:                                      │
+│   [Preset 1: Room Closure]  [Preset 2: Attendance Spike]     │
+│   [Preset 3: Impossible Conflict (UNSAT)]                    │
+├──────────────────────────────────────────────────────────────┤
+│ Section C: Repair Diff & Independent Verification            │
+│ - Metric Cards: 1 Event Changed · 0 Mins Shifted · 100% Valid│
+│ - Diff Table: Shows original vs repaired location.           │
+│ - Actions: [Apply Repair & Broadcast]   [Discard]   [Reset]  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
----
-
-## 5. Screen Layout & Wireframe Specifications
-
-### Screen A4: The Repair Diff Inspection Interface
-- **Top Metric Cards:**
-  - `Total Events: 6`
-  - `Events Moved: 1`
-  - `Time Displacement: 0 hrs`
-  - `Validation: 100% Passed`
-- **Diff Table:**
-  | Event Name | Original Room / Time | Repaired Room / Time | Status |
-  | :--- | :--- | :--- | :--- |
-  | **Robotics Workshop** | `Lab A (14:00 - 16:00)` | `Lab D (14:00 - 16:00)` | 🟡 **Moved (Equipment Match)** |
-  | **Coding Assessment** | `Lab B (14:00 - 16:00)` | `Lab B (14:00 - 16:00)` | 🟢 **Protected (Untouched)** |
-  | **Club Meeting** | `Seminar C (14:00 - 15:00)` | `Seminar C (14:00 - 15:00)` | ⚪ **Retained** |
-- **Action Buttons:**
-  - `[Apply Repair & Publish Updates]` (Green button)
-  - `[Discard Proposal]` (Muted red button)
-  - `[Export iCal (.ics)]` (Secondary link)
+### Admin Actions & SLA Behavior:
+1. **Manual Action:** Admin clicks `Approve Now` ➔ Request status becomes `approved`. Schedule updates.
+2. **Auto-Approval:** If admin takes no action within 2 hours (or tester clicks `Simulate 2-Hour SLA Timeout`), the system automatically promotes the proposed slot to `auto_approved` and broadcasts the update.
+3. **Emergency Disruption:** When a room is closed, Z3 executes lexicographic minimal disruption and highlights the verified replacement plan.

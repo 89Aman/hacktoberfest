@@ -1,7 +1,7 @@
 # Campus Rescue — System Architecture & Technical Specification
 
 **System Type:** Neuro-Symbolic Disruption Repair Engine  
-**Models:** Google Gemma 2 (2B / 9B) Open-Weights LLM  
+**Models:** Google Gemma 4 (2B / 9B / 26B) Open-Weights & Hosted LLM  
 **Deterministic Engine:** Z3 SMT Theorem Prover / Optimizer (`z3-solver` Python runtime)  
 **Schema Layer:** Pydantic V2  
 **Presentation Layer:** Streamlit Responsive Dashboard  
@@ -18,7 +18,7 @@ Standard chatbots predict text probabilistically. When applied to campus schedul
 sequenceDiagram
     autonumber
     actor User as Coordinator / Faculty / Student
-    participant Gemma as Gemma 2 (Semantic Compiler)
+    participant Gemma as Gemma 4 (Semantic Compiler)
     participant Schema as Pydantic Schema Validator
     participant Z3 as Z3 SMT Solver & Optimizer
     participant Gate as Independent Validator (Zero-Trust)
