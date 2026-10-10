@@ -1,9 +1,13 @@
 import os
 import uuid
+from pathlib import Path
 from typing import List, Optional, Dict, Any
 from datetime import datetime, timezone, timedelta
 try:
     from dotenv import load_dotenv
+    base_dir = Path(__file__).resolve().parent
+    load_dotenv(base_dir / ".env")
+    load_dotenv(base_dir.parent / ".env")
     load_dotenv()
 except ImportError:
     pass
@@ -45,7 +49,7 @@ def health_check():
     return {
         "status": "healthy",
         "gemma_configured": bool(model_adapter.client),
-        "supabase_connected": bool(db.client),
+        "supabase_connected": bool(db.is_connected),
         "active_rooms": len(db.get_rooms()),
         "active_events": len(db.get_events())
     }
@@ -96,9 +100,17 @@ def create_booking_request(req_body: BookingPromptRequest):
         setup_buffer = s.setup_buffer_slots
         cleanup_buffer = s.cleanup_buffer_slots
     elif req_body.prompt:
-        # Parse prompt with Gemma 4
-        envelope, parsing_mode = model_adapter.parse_disruption(req_body.prompt)
-        event_name = req_body.prompt[:40]
+        # Parse prompt with Gemma 4 or structured fallback
+        extracted, parsing_mode = model_adapter.parse_booking_request(
+            req_body.prompt, requested_by=req_body.requested_by
+        )
+        event_name = extracted.event_name
+        attendance = extracted.attendance
+        duration_slots = extracted.duration_slots
+        required_equipment = extracted.required_equipment
+        preferred_start_slot = extracted.preferred_start_slot
+        setup_buffer = extracted.setup_buffer_slots
+        cleanup_buffer = extracted.cleanup_buffer_slots
 
     # 2. Find best collision-free slot via SMT engine
     slot_recommendation = solver.find_best_slot_for_new_request(
@@ -294,3 +306,10 @@ def reset_schedule():
         "timestamp": now.isoformat()
     })
     return {"status": "reset", "message": "Schedule restored to seeded baseline."}
+
+if __name__ == "__main__":
+    import uvicorn
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run("backend.main:app", host=host, port=port, reload=True)
+

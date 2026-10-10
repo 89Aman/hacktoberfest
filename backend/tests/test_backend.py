@@ -104,3 +104,24 @@ def test_impossible_conflict_unsat():
     assert result.status == "infeasible"
     assert len(result.unsat_core_tags) > 0
     assert "Conflicting Constraints" in result.conflict_explanation
+
+def test_parse_booking_request_fallback():
+    from backend.core.model_adapter import GemmaModelAdapter
+    adapter = GemmaModelAdapter()
+    
+    prompt = "Need a room for 35 people for a 2-hour Robotics workshop with electronics kits at 14:00"
+    booking, mode = adapter.parse_booking_request(prompt)
+    
+    assert booking.attendance == 35
+    assert booking.duration_slots == 4  # 2 hours = 4 slots
+    assert "electronics_kits" in booking.required_equipment
+    assert booking.preferred_start_slot == 10  # 14:00 = slot 10
+    assert mode == "Structured Fallback Mode"
+
+def test_environment_loading():
+    import os
+    from backend.main import app
+    # Verify environment values are loaded properly
+    assert os.getenv("GEMMA_MODEL_NAME", "gemma-4-26b-a4b-it") is not None
+    assert app.title == "Campus Rescue API"
+

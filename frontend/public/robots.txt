@@ -1,0 +1,6 @@
+# Campus Rescue Robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://campusrescue.hacktoberfest.edu/sitemap.xml
