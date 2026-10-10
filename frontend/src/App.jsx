@@ -13,6 +13,26 @@ import {
   resetSchedule,
   fetchNotifications
 } from './api';
+import {
+  IconBolt,
+  IconCheckCircle,
+  IconAlertTriangle,
+  IconClock,
+  IconCalendar,
+  IconEdit,
+  IconShield,
+  IconBell,
+  IconRefresh,
+  IconDownload,
+  IconBroadcast,
+  IconCpu,
+  IconLock,
+  IconInfo,
+  IconTarget,
+  IconClose,
+  IconLayers,
+  IconTerminal
+} from './icons';
 
 // Slot formatting helper: slot 0 = 09:00, slot 18 = 18:00
 function slotToTime(slot) {
@@ -143,7 +163,7 @@ export default function App() {
 
       setBookingRecommendation(res.recommendation);
       setSlaCountdownSec(7200);
-      triggerToast(`Collision-free slot found in ${res.recommendation.room_name}!`);
+      triggerToast(`Collision-free slot verified in ${res.recommendation.room_name}`);
       loadData();
     } catch (err) {
       triggerToast(`Solver Notice: ${err.message}`);
@@ -167,13 +187,13 @@ export default function App() {
       if (res.solver_result && res.solver_result.is_sat) {
         setRepairResult(res.solver_result);
         setValidationReport(res.validation_report);
-        triggerToast('Z3 Prover: Minimal displacement repair computed!');
+        triggerToast('Z3 Prover: Minimal displacement repair computed');
       } else {
         const expl = (res.solver_result && res.solver_result.conflict_explanation) ||
                      res.clarification_question ||
-                     'UNSAT: No feasible schedule satisfies all hard capacity and availability constraints.';
+                     'UNSAT: Infeasible schedule. Constraints violate capacity or time bounds.';
         setUnsatExplanation(expl);
-        triggerToast('Conflict detected (UNSAT): Constraints violated.');
+        triggerToast('Constraint conflict detected (UNSAT)');
       }
       loadData();
     } catch (err) {
@@ -190,7 +210,7 @@ export default function App() {
     try {
       await applyRepair(repairResult.proposed_allocations);
       setRepairResult(null);
-      triggerToast('Schedule repair broadcasted campus-wide via Supabase!');
+      triggerToast('Schedule repair broadcasted campus-wide via Supabase');
       loadData();
     } catch (err) {
       triggerToast(`Failed to apply repair: ${err.message}`);
@@ -204,7 +224,7 @@ export default function App() {
     setLoading(true);
     try {
       const res = await runSlaCheck(2.1);
-      triggerToast(`SLA Check Complete: ${res.auto_approved_count} request(s) auto-approved!`);
+      triggerToast(`SLA Check Complete: ${res.auto_approved_count} request(s) auto-approved`);
       loadData();
     } catch (err) {
       triggerToast(`SLA check failed: ${err.message}`);
@@ -222,7 +242,7 @@ export default function App() {
       setRepairResult(null);
       setUnsatExplanation(null);
       setBookingRecommendation(null);
-      triggerToast('Supabase database and schedule restored to baseline!');
+      triggerToast('Supabase database and schedule restored to baseline');
       loadData();
     } catch (err) {
       triggerToast(`Reset failed: ${err.message}`);
@@ -254,10 +274,12 @@ export default function App() {
     <div className="min-h-screen bg-[#090D16] text-[#DFE2EF] flex flex-col font-sans selection:bg-[#06B6D4] selection:text-black">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-12 right-6 z-50 bg-[#0F172A] border border-[#06B6D4] text-white px-4 py-3 rounded-xl shadow-[0_0_25px_rgba(6,182,212,0.3)] flex items-center space-x-3 animate-bounce">
-          <span className="text-[#06B6D4] font-bold">⚡</span>
+        <div className="fixed bottom-12 right-6 z-50 bg-[#0F172A] border border-[#06B6D4] text-white px-4 py-3 rounded-xl shadow-[0_0_25px_rgba(6,182,212,0.3)] flex items-center space-x-3">
+          <IconBolt className="w-4 h-4 text-[#06B6D4]" />
           <span className="text-xs font-mono">{toastMessage}</span>
-          <button onClick={() => setToastMessage(null)} className="text-[#869397] hover:text-white text-xs ml-2">✕</button>
+          <button onClick={() => setToastMessage(null)} className="text-[#869397] hover:text-white ml-2" aria-label="Close notification">
+            <IconClose className="w-3.5 h-3.5" />
+          </button>
         </div>
       )}
 
@@ -265,17 +287,17 @@ export default function App() {
       <header className="border-b border-white/10 glass-panel px-6 py-3.5 sticky top-0 z-40 flex items-center justify-between">
         <div className="flex items-center space-x-3.5">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#06B6D4] via-[#0284C7] to-[#4F46E5] flex items-center justify-center text-white font-bold text-xl shadow-[0_0_20px_rgba(6,182,212,0.4)]">
-            ⚡
+            <IconCpu className="w-5 h-5 text-white" />
           </div>
           <div>
             <div className="flex items-center space-x-2.5">
               <span className="font-headline font-bold text-lg text-white tracking-tight">Campus Rescue</span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono uppercase bg-[#10B981]/15 text-[#34D399] border border-[#10B981]/30 flex items-center space-x-1">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-mono uppercase bg-[#10B981]/15 text-[#34D399] border border-[#10B981]/30 flex items-center space-x-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse"></span>
                 <span>Gemma 4 & Z3 SMT Active</span>
               </span>
               <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-mono uppercase bg-cyan-950/60 text-cyan-300 border border-cyan-800/40">
-                Supabase Live
+                Supabase Connected
               </span>
             </div>
             <p className="text-[11px] text-[#869397]">Autonomous Schedule Repair & Room Allocation Platform</p>
@@ -285,8 +307,8 @@ export default function App() {
         {/* Center Telemetry & Clock */}
         <div className="hidden lg:flex items-center space-x-4 text-xs font-mono">
           <span className="text-[#869397] flex items-center space-x-1.5">
-            <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
-            <span>{currentTimeStr} · 09:00–18:00 Discrete Grid</span>
+            <IconClock className="w-3.5 h-3.5 text-cyan-400" />
+            <span>{currentTimeStr} · 09:00–18:00 Matrix (18 Slots)</span>
           </span>
           <span className="px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/10 text-cyan-300">
             Z3 SAT Prover · 0ms Drift
@@ -301,7 +323,7 @@ export default function App() {
             title="System Audit Feed"
             aria-label="System Audit Feed"
           >
-            🔔
+            <IconBell className="w-4 h-4" />
             {notifications.length > 0 && (
               <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#06B6D4]"></span>
             )}
@@ -342,9 +364,10 @@ export default function App() {
             </div>
             <button
               onClick={() => setShowNotifDrawer(false)}
-              className="text-xs text-[#869397] hover:text-white"
+              className="text-xs text-[#869397] hover:text-white flex items-center space-x-1"
             >
-              Close ✕
+              <span>Close</span>
+              <IconClose className="w-3.5 h-3.5" />
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -374,7 +397,7 @@ export default function App() {
                 : 'text-[#869397] hover:text-white'
             }`}
           >
-            <span>📝</span>
+            <IconEdit className="w-4 h-4" />
             <span>Request a Room</span>
           </button>
           <button
@@ -387,7 +410,7 @@ export default function App() {
                 : 'text-[#869397] hover:text-white'
             }`}
           >
-            <span>📅</span>
+            <IconCalendar className="w-4 h-4" />
             <span>Live Timetable Grid</span>
             <span className="text-[10px] px-1.5 py-0.2 rounded bg-white/10 font-mono text-cyan-300">
               {events.length}
@@ -403,7 +426,7 @@ export default function App() {
                 : 'text-[#869397] hover:text-white'
             }`}
           >
-            <span>🛡️</span>
+            <IconShield className="w-4 h-4" />
             <span>Admin Console</span>
             {pendingBookingCount > 0 && (
               <span className="w-5 h-5 rounded-full bg-amber-500 text-black text-[10px] font-bold flex items-center justify-center animate-pulse">
@@ -419,7 +442,7 @@ export default function App() {
             onClick={handleReset}
             className="text-xs px-3.5 py-1.5 rounded-lg border border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500/50 transition flex items-center space-x-1.5"
           >
-            <span>🔄</span>
+            <IconRefresh className="w-3.5 h-3.5" />
             <span>Reset Seed Database</span>
           </button>
         </div>
@@ -459,13 +482,13 @@ export default function App() {
                 {/* Intent Chips */}
                 <div className="flex flex-wrap gap-1.5 mt-2">
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40 text-cyan-300">
-                    ⚡ Parsed: Capacity ≥ {attendance}
+                    CAPACITY &gt;= {attendance}
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-950/60 border border-indigo-800/40 text-indigo-300">
-                    ⏱️ Duration: {durationSlots * 30} mins ({durationSlots} slots)
+                    DURATION: {durationSlots * 30} MINS ({durationSlots} SLOTS)
                   </span>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/40 text-emerald-300">
-                    🛠️ Type: {eventType.toUpperCase()}
+                    TYPE: {eventType.toUpperCase()}
                   </span>
                 </div>
               </div>
@@ -571,6 +594,7 @@ export default function App() {
                 disabled={loading}
                 className="w-full py-3 rounded-xl bg-gradient-to-r from-[#06B6D4] to-[#0284C7] text-white font-semibold text-sm hover:brightness-110 shadow-[0_0_20px_rgba(6,182,212,0.4)] transition flex items-center justify-center space-x-2 disabled:opacity-50"
               >
+                <IconBolt className="w-4 h-4" />
                 <span>{loading ? 'Evaluating Z3 SMT Formal Constraints...' : 'Run Z3 SMT Solver & Find Slot'}</span>
               </button>
             </div>
@@ -580,8 +604,8 @@ export default function App() {
               {bookingRecommendation ? (
                 <div className="glass-card-elevated p-6 rounded-2xl border border-cyan-500/40 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-1 rounded-md text-[11px] font-mono uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center space-x-1">
-                      <span>✓</span>
+                    <span className="px-2.5 py-1 rounded-md text-[11px] font-mono uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center space-x-1.5">
+                      <IconCheckCircle className="w-3.5 h-3.5" />
                       <span>Verified Collision-Free Slot</span>
                     </span>
                     <span className="text-xs font-mono text-[#869397]">Score: 100% SAT</span>
@@ -594,11 +618,11 @@ export default function App() {
                     </p>
                   </div>
 
-                  {/* "Why This Slot?" Explanation Card */}
+                  {/* Explanation Card */}
                   <div className="p-4 rounded-xl bg-[#0F131C]/80 border border-white/10 space-y-1.5">
-                    <div className="text-[11px] font-mono uppercase text-[#06B6D4] flex items-center space-x-1">
-                      <span>💡</span>
-                      <span>Why This Slot? (Gemma 4 Verification)</span>
+                    <div className="text-[11px] font-mono uppercase text-[#06B6D4] flex items-center space-x-1.5">
+                      <IconInfo className="w-3.5 h-3.5" />
+                      <span>Constraint Reasoning (Gemma 4 Verification)</span>
                     </div>
                     <p className="text-xs text-[#DFE2EF] leading-relaxed">
                       {bookingRecommendation.explanation}
@@ -608,8 +632,8 @@ export default function App() {
                   {/* 2-Hour Auto-Approval SLA Countdown Box */}
                   <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
                     <div>
-                      <div className="text-[11px] font-mono uppercase text-amber-400 font-semibold flex items-center space-x-1">
-                        <span>⏱️</span>
+                      <div className="text-[11px] font-mono uppercase text-amber-400 font-semibold flex items-center space-x-1.5">
+                        <IconClock className="w-3.5 h-3.5" />
                         <span>2-Hour Auto-Approval SLA</span>
                       </div>
                       <p className="text-[11px] text-[#869397]">
@@ -627,19 +651,20 @@ export default function App() {
                   <div className="pt-2">
                     <button
                       onClick={() => {
-                        triggerToast('Booking request committed to Supabase queue with active 2-hour SLA!');
+                        triggerToast('Booking request committed to Supabase queue with active 2-hour SLA');
                         loadData();
                       }}
-                      className="w-full py-2.5 rounded-lg bg-[#06B6D4] text-[#003640] font-bold text-sm hover:bg-cyan-300 transition shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                      className="w-full py-2.5 rounded-lg bg-[#06B6D4] text-[#003640] font-bold text-sm hover:bg-cyan-300 transition shadow-[0_0_15px_rgba(6,182,212,0.3)] flex items-center justify-center space-x-2"
                     >
-                      Confirm Booking Request
+                      <IconCheckCircle className="w-4 h-4" />
+                      <span>Confirm Booking Request</span>
                     </button>
                   </div>
                 </div>
               ) : (
                 <div className="glass-panel p-8 rounded-2xl border border-white/10 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px]">
-                  <div className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-2xl text-[#869397]">
-                    🎯
+                  <div className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center text-[#869397]">
+                    <IconTarget className="w-6 h-6" />
                   </div>
                   <h3 className="text-base font-headline font-semibold text-white">No Active Query</h3>
                   <p className="text-xs text-[#869397] max-w-xs">
@@ -679,11 +704,11 @@ export default function App() {
                 <button
                   onClick={() => {
                     navigator.clipboard?.writeText(window.location.origin + '/api/schedule');
-                    triggerToast('Timetable .ics calendar feed copied to clipboard!');
+                    triggerToast('Timetable .ics calendar feed copied to clipboard');
                   }}
                   className="px-3.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/15 text-xs text-white hover:bg-white/[0.08] transition flex items-center space-x-1.5"
                 >
-                  <span>📥</span>
+                  <IconDownload className="w-3.5 h-3.5" />
                   <span>Export iCal Feed</span>
                 </button>
               </div>
@@ -747,10 +772,16 @@ export default function App() {
                               <div className="flex items-center justify-between">
                                 <span className="font-semibold truncate">{ev.name}</span>
                                 {ev.is_protected && (
-                                  <span className="text-[9px] px-1 bg-purple-900 rounded font-mono">🔒 PROTECTED</span>
+                                  <span className="text-[9px] px-1 bg-purple-900 rounded font-mono flex items-center space-x-1">
+                                    <IconLock className="w-2.5 h-2.5 inline" />
+                                    <span>LOCKED</span>
+                                  </span>
                                 )}
                                 {isRelocated && (
-                                  <span className="text-[9px] px-1 bg-amber-900 rounded font-mono">⚡ RELOCATED</span>
+                                  <span className="text-[9px] px-1 bg-amber-900 rounded font-mono flex items-center space-x-1">
+                                    <IconBolt className="w-2.5 h-2.5 inline" />
+                                    <span>MOVED</span>
+                                  </span>
                                 )}
                               </div>
                               <span className="text-[10px] opacity-80 font-mono">
@@ -784,9 +815,9 @@ export default function App() {
                 </div>
                 <button
                   onClick={handleFastForwardSla}
-                  className="px-3.5 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-mono hover:bg-amber-500/30 transition flex items-center space-x-1 self-start sm:self-auto"
+                  className="px-3.5 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-xs font-mono hover:bg-amber-500/30 transition flex items-center space-x-1.5 self-start sm:self-auto"
                 >
-                  <span>⚡</span>
+                  <IconClock className="w-3.5 h-3.5" />
                   <span>Simulate 2-Hour Timeout</span>
                 </button>
               </div>
@@ -856,21 +887,24 @@ export default function App() {
               <div className="flex flex-wrap gap-2.5">
                 <button
                   onClick={() => handleTriggerDisruption('Robotics Lab A has a water leak after 2 PM. Keep the Coding Assessment untouched.')}
-                  className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white hover:border-[#06B6D4] transition"
+                  className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white hover:border-[#06B6D4] transition flex items-center space-x-1.5"
                 >
-                  ⚠️ Preset 1: Lab A Water Leak (14:00)
+                  <IconAlertTriangle className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Preset 1: Lab A Water Leak (14:00)</span>
                 </button>
                 <button
                   onClick={() => handleTriggerDisruption('The robotics workshop now has 45 attendees and Lab A is closed.')}
-                  className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-amber-300 hover:border-amber-400 transition"
+                  className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-amber-300 hover:border-amber-400 transition flex items-center space-x-1.5"
                 >
-                  📈 Preset 2: Attendance Surge 45 (UNSAT Demo)
+                  <IconLayers className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Preset 2: Attendance Surge 45 (UNSAT Proof)</span>
                 </button>
                 <button
                   onClick={() => handleTriggerDisruption('Prof. Rao can supervise only after 3 PM today.')}
-                  className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white hover:border-[#06B6D4] transition"
+                  className="px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white hover:border-[#06B6D4] transition flex items-center space-x-1.5"
                 >
-                  ⏱️ Preset 3: Supervisor Delayed (+60m)
+                  <IconClock className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Preset 3: Supervisor Delayed (+60m)</span>
                 </button>
               </div>
 
@@ -885,17 +919,18 @@ export default function App() {
                 />
                 <button
                   onClick={() => handleTriggerDisruption()}
-                  className="px-5 py-2.5 rounded-xl bg-[#06B6D4] text-[#003640] font-bold text-xs hover:bg-cyan-300 transition"
+                  className="px-5 py-2.5 rounded-xl bg-[#06B6D4] text-[#003640] font-bold text-xs hover:bg-cyan-300 transition flex items-center space-x-1.5"
                 >
-                  Execute Solver
+                  <IconBolt className="w-3.5 h-3.5" />
+                  <span>Execute Solver</span>
                 </button>
               </div>
 
               {/* Infeasible / UNSAT Blocker Display */}
               {unsatExplanation && (
                 <div className="p-4 rounded-xl bg-red-950/40 border border-red-500/50 text-red-200 text-xs space-y-1">
-                  <div className="font-mono font-bold text-red-400 uppercase text-[11px] flex items-center space-x-1">
-                    <span>🛑</span>
+                  <div className="font-mono font-bold text-red-400 uppercase text-[11px] flex items-center space-x-1.5">
+                    <IconAlertTriangle className="w-4 h-4 text-red-400" />
                     <span>Constraint Violation (UNSAT)</span>
                   </div>
                   <p>{unsatExplanation}</p>
@@ -917,8 +952,9 @@ export default function App() {
                     </div>
 
                     {validationReport && (
-                      <span className="text-[11px] font-mono text-emerald-400">
-                        ✓ {validationReport.checks_passed}/{validationReport.total_checks} Independent Zero-Trust Checks Passed
+                      <span className="text-[11px] font-mono text-emerald-400 flex items-center space-x-1">
+                        <IconCheckCircle className="w-3.5 h-3.5" />
+                        <span>{validationReport.checks_passed}/{validationReport.total_checks} Independent Zero-Trust Checks Passed</span>
                       </span>
                     )}
                   </div>
@@ -959,7 +995,7 @@ export default function App() {
                       onClick={handleApplyRepair}
                       className="px-5 py-2 rounded-xl bg-[#10B981] text-black font-bold text-xs hover:bg-emerald-400 transition flex items-center space-x-1.5 shadow-[0_0_15px_rgba(16,185,129,0.4)]"
                     >
-                      <span>📢</span>
+                      <IconBroadcast className="w-4 h-4" />
                       <span>Apply Repair & Broadcast</span>
                     </button>
                   </div>
@@ -977,7 +1013,7 @@ export default function App() {
           <span>
             {notifications.length > 0
               ? notifications[0].message
-              : '⚡ Z3 Solver Engine ready · Zero schedule collisions detected'}
+              : 'Z3 Solver Engine ready · Zero schedule collisions detected'}
           </span>
         </div>
         <div className="text-[#869397] hidden sm:block">
