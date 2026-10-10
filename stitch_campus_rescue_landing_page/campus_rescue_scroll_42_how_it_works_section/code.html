@@ -1,0 +1,617 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Campus Rescue — 03 / How It Works</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#acc7ff",
+            "primary-fixed": "#d7e2ff",
+            "on-tertiary-fixed": "#261a00",
+            "surface-container": "#f1eee5",
+            "background": "#fcf9f0",
+            "tertiary-fixed-dim": "#f0c04f",
+            "surface-container-low": "#f6f3ea",
+            "on-secondary-container": "#56607d",
+            "on-background": "#1c1c17",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#0f1b34",
+            "on-primary-fixed": "#001a40",
+            "on-tertiary-container": "#ffd271",
+            "on-surface-variant": "#434751",
+            "surface-tint": "#2f5da8",
+            "primary-container": "#2f5da8",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#ebe8df",
+            "secondary": "#535e7b",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#e5e2da",
+            "secondary-container": "#d1dcfe",
+            "surface-dim": "#dddad1",
+            "inverse-primary": "#acc7ff",
+            "secondary-fixed-dim": "#bbc6e7",
+            "secondary-fixed": "#d9e2ff",
+            "inverse-surface": "#31312b",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#ffdf9e",
+            "on-secondary-fixed-variant": "#3b4662",
+            "on-primary-fixed-variant": "#0a458f",
+            "on-secondary": "#ffffff",
+            "surface": "#fcf9f0",
+            "on-surface": "#1c1c17",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2da",
+            "inverse-on-surface": "#f4f1e8",
+            "primary": "#0a458f",
+            "on-tertiary-fixed-variant": "#5b4300",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#c8d9ff",
+            "tertiary": "#5b4300",
+            "outline": "#737782",
+            "tertiary-container": "#785900",
+            "surface-bright": "#fcf9f0",
+            "outline-variant": "#c3c6d3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Newsreader", "serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "stamp-badge": ["JetBrains Mono", "monospace"],
+            "headline-xl": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "label-code": ["JetBrains Mono", "monospace"],
+            "body-md": ["Inter", "sans-serif"]
+          },
+          "fontSize": {
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "stamp-badge": ["11px", { "lineHeight": "12px", "letterSpacing": "0.12em", "fontWeight": "700" }],
+            "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-code": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    /* Continuous Drafting Desk Grid (20px x 20px) */
+    .bg-drafting-grid {
+      background-color: #F6F1E7;
+      background-image: 
+        linear-gradient(to right, #E6DDCB 1px, transparent 1px),
+        linear-gradient(to bottom, #E6DDCB 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Blueprint Cyan Micro-grid for Solver Tile */
+    .bg-blueprint-grid {
+      background-color: #FFFCF5;
+      background-image: 
+        linear-gradient(to right, rgba(47, 93, 168, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(47, 93, 168, 0.08) 1px, transparent 1px);
+      background-size: 10px 10px;
+    }
+
+    /* Washi tape visual artifact */
+    .washi-tape {
+      background: rgba(230, 221, 203, 0.85);
+      box-shadow: 0 1px 2px rgba(31, 42, 68, 0.1);
+      backdrop-filter: blur(1px);
+    }
+
+    /* Mechanical hard offset shadows */
+    .shadow-paper {
+      box-shadow: 4px 4px 0px rgba(31, 42, 68, 0.12);
+    }
+    .shadow-tactile {
+      box-shadow: 3px 3px 0px #1F2A44;
+    }
+    .shadow-tactile-sm {
+      box-shadow: 2px 2px 0px #1F2A44;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-drafting-grid text-on-surface antialiased min-h-screen relative selection:bg-[#FFE79A] selection:text-[#1F2A44]">
+<!-- CONTINUOUS STORY THREAD: Dotted pen line along the left drafting edge (x=72px) -->
+<div class="absolute left-[72px] top-0 bottom-0 w-0 border-l-2 border-dashed border-[#1F2A44]/40 z-20 pointer-events-none"></div>
+<!-- FIXED/STICKY NAVBAR AT 42% SCROLL POSITION -->
+<header class="sticky top-0 w-full z-50 bg-[#F6F1E7]/95 backdrop-blur-md border-b border-[#1F2A44] transition-all h-14">
+<div class="max-w-[1440px] mx-auto px-margin h-full flex items-center justify-between">
+<!-- Left: Logo & System Identity -->
+<div class="flex items-center gap-space-md">
+<a class="flex items-center gap-2 font-headline-md text-headline-md font-bold text-[#1F2A44] tracking-tight hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined text-primary text-[24px]">grid_view</span><span class="">Campus Rescue</span><span class="font-label-code text-[11px] text-outline font-normal border-l border-outline/30 pl-2 ml-0.5">z3.core</span></a>
+<span class="hidden lg:inline-block font-label-code text-body-sm text-outline border-l border-outline/40 pl-space-sm">
+          FORMAL DISPATCH SAT/SMT
+        </span>
+</div>
+<!-- Center: Navigation Links with 'How It Works' Active -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#problem">Problem</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#features">Features</a>
+<!-- Active Nav Anchor: How It Works with Gold Highlighter Stroke -->
+<div class="relative py-1">
+<a class="font-body-md text-body-md text-[#1F2A44] font-bold" href="#how-it-works">
+            How It Works
+          </a>
+<!-- Highlighter Marker Underline -->
+<span class="absolute bottom-0 left-0 right-0 h-[5px] bg-[#E9B949] -z-10 transform -rotate-1 rounded-sm"></span>
+</div>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#simulator">Simulator</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#why-us">Why Us</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#docs">Docs</a>
+</nav>
+<!-- Center-Right: Story Stamps Tracker (Nodes 1 to 5) -->
+<div class="hidden xl:flex items-center gap-2 bg-[#FFFCF5] px-3 py-1 border border-[#1F2A44] shadow-tactile-sm">
+<!-- Node 1: Green Verified -->
+<span class="flex items-center gap-1 font-stamp-badge text-[10px] text-[#5E8C61] font-bold">
+<span class="w-2 h-2 rounded-full bg-[#5E8C61]"></span>
+          01 DISRUPT
+        </span>
+<span class="text-outline/40 text-xs font-label-code">→</span>
+<!-- Node 2: Green Verified -->
+<span class="flex items-center gap-1 font-stamp-badge text-[10px] text-[#5E8C61] font-bold">
+<span class="w-2 h-2 rounded-full bg-[#5E8C61]"></span>
+          02 PARSE
+        </span>
+<span class="text-outline/40 text-xs font-label-code">→</span>
+<!-- Node 3: Current Active (Gold) -->
+<span class="flex items-center gap-1.5 font-stamp-badge text-[10px] text-[#1F2A44] bg-[#FFE79A] px-1.5 py-0.5 border border-[#1F2A44] font-bold animate-pulse">
+<span class="w-2 h-2 rounded-full bg-[#E9B949] border border-[#1F2A44]"></span>
+          03 SOLVE
+        </span>
+<span class="text-outline/40 text-xs font-label-code">→</span>
+<!-- Node 4: Grey Outline -->
+<span class="font-stamp-badge text-[10px] text-outline opacity-60">04 AUDIT</span>
+<span class="text-outline/40 text-xs font-label-code">→</span>
+<!-- Node 5: Grey Outline -->
+<span class="font-stamp-badge text-[10px] text-outline opacity-60">05 SYNC</span>
+</div>
+<!-- Right: Secondary Flat Paper CTA Button -->
+<div class="flex items-center gap-3">
+<a class="bg-[#FFFCF5] text-[#1F2A44] font-label-code text-label-code font-semibold px-4 py-1.5 border border-[#1F2A44] shadow-tactile-sm hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all flex items-center gap-2" href="#simulator">
+<span class="">See the Simulator</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- 42% Scroll Progress Line across navbar bottom -->
+<div class="w-full h-[3px] bg-outline-variant/30 relative">
+<div class="h-full bg-primary-container" style="width: 42%;"></div>
+</div>
+</header>
+<!-- MAIN CANVAS: Max 1200px drafting sheet -->
+<main class="max-w-[1200px] mx-auto px-margin pt-10 pb-20 relative">
+<!-- STORY NODE 3 CIRCULAR RUBBER STAMP BADGE (Positioned directly over the x=72px thread line) -->
+<div class="absolute -left-3 top-16 z-30 flex flex-col items-center">
+<div class="w-14 h-14 rounded-full bg-[#FFE79A] border-2 border-[#1F2A44] shadow-tactile flex flex-col items-center justify-center transform -rotate-6">
+<span class="font-stamp-badge text-[9px] text-[#785900] tracking-widest font-bold">STATE</span>
+<span class="font-stamp-badge text-stamp-badge text-[#1F2A44] font-extrabold leading-none">03 SOLVE</span>
+</div>
+<span class="font-label-code text-[9px] text-[#1F2A44] bg-[#FFFCF5] px-1 border border-[#1F2A44] mt-1 shadow-sm font-semibold">
+        ACTIVE
+      </span>
+</div>
+<!-- SECTION HEADER: TYPEWRITER CHIP & HEADLINES -->
+<section class="pl-14 md:pl-20 mb-12">
+<!-- Section Tag Chip -->
+<div class="inline-flex items-center gap-2 bg-[#FFFCF5] border border-[#1F2A44] px-3 py-1 shadow-paper mb-4">
+<span class="w-2 h-2 bg-[#E9B949] border border-[#1F2A44]"></span>
+<span class="font-label-code text-label-code text-[#1F2A44] tracking-wider uppercase font-semibold">
+          03 / HOW IT WORKS
+        </span>
+</div>
+<!-- Main Heading (Newsreader, 44px, bold ink) with Blueprint-Blue Hand-drawn Underline -->
+<h1 class="font-headline-xl text-headline-xl text-[#1F2A44] font-bold max-w-4xl tracking-tight leading-[1.15]">
+        Gemma translates. 
+        <span class="relative inline-block px-1">
+<span class="relative z-10 text-primary">Math decides.</span>
+<!-- Sketched Blueprint Underline -->
+<svg class="absolute -bottom-2 left-0 w-full h-4 text-primary-container pointer-events-none" fill="none" preserveAspectRatio="none" viewBox="0 0 240 16">
+<path d="M2 11C45 4 135 3 238 9M5 14C55 8 160 7 230 13" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</span> 
+        A validator double-checks.
+      </h1>
+<!-- Subheadline -->
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mt-4">
+        Translating ambiguous human language into verifiable mathematical truth with zero AI hallucinations.
+      </p>
+</section>
+<!-- SECTION WORKFLOW: 5-TILE NEURO-SYMBOLIC PIPELINE -->
+<section class="pl-14 md:pl-20 mb-14">
+<div class="border border-[#1F2A44] bg-[#FFFCF5] p-6 shadow-paper relative">
+<!-- Header Ribbon inside Ledger Box -->
+<div class="flex flex-wrap items-center justify-between pb-4 mb-6 border-b border-[#1F2A44] gap-2">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">account_tree</span>
+<span class="font-headline-sm text-headline-sm text-[#1F2A44]">Deterministic Pipeline Architecture</span>
+<span class="font-label-code text-body-sm bg-[#F1ECE1] px-2 py-0.5 border border-[#1F2A44]/30 text-on-surface-variant">
+              SAT/SMT Formal Chain
+            </span>
+</div>
+<div class="flex items-center gap-3 font-label-code text-body-sm text-outline">
+<span class="">Latency Target: <strong class="text-[#1F2A44]">&lt; 150ms</strong></span>
+<span class="">•</span>
+<span class="">Provable Correctness: <strong class="text-[#5E8C61]">100%</strong></span>
+</div>
+</div>
+<!-- 5-Tile Flow Container (Responsive Bento Grid / Flow) -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-3 items-stretch relative">
+<!-- ==================== TILE 1: HUMAN INPUT ==================== -->
+<div class="bg-[#FFFCF5] border border-[#1F2A44] p-4 flex flex-col justify-between shadow-tactile-sm relative group hover:-translate-y-0.5 transition-transform">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-stamp-badge text-[10px] text-outline uppercase font-bold tracking-wider">Step 01 // Slotted</span>
+<span class="w-2.5 h-2.5 rounded-full border border-[#1F2A44] bg-surface-container"></span>
+</div>
+<h4 class="font-headline-sm text-[16px] text-[#1F2A44] font-bold mb-2">Unstructured Request</h4>
+<!-- Paper Slip / Memo Box -->
+<div class="bg-[#F6F1E7] border border-dashed border-[#1F2A44]/60 p-2.5 font-label-code text-[12px] text-[#1F2A44] leading-relaxed relative">
+<span class="text-xs text-outline block mb-1 font-stamp-badge text-[9px]">// TYPEWRITER SLIP</span>
+                “Robotics Lab A has an AC water leak after 2 PM. Protect the Coding Assessment.”
+              </div>
+</div>
+<div class="mt-4 pt-2 border-t border-[#1F2A44]/20 flex items-center justify-between">
+<span class="font-label-code text-[11px] text-outline">Voice / Email / SMS</span>
+<span class="material-symbols-outlined text-[16px] text-outline">record_voice_over</span>
+</div>
+</div>
+<!-- CONNECTOR ARROW 1 -> 2 (Desktop only) -->
+<div class="hidden md:flex absolute left-[19.2%] top-1/2 -translate-y-1/2 z-20 pointer-events-none text-primary">
+<svg class="w-6 h-6 transform -rotate-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 12h14m-5-5l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- ==================== TILE 2: GEMMA JSON TRANSLATION ==================== -->
+<div class="bg-[#31312B] border border-[#1F2A44] p-4 flex flex-col justify-between shadow-tactile-sm relative group hover:-translate-y-0.5 transition-transform text-[#F4F1E8]">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-stamp-badge text-[10px] text-tertiary-fixed font-bold tracking-wider">Step 02 // Neural</span>
+<span class="font-stamp-badge text-[9px] bg-primary px-1.5 text-white border border-[#FFFCF5]/30">Gemma-9B</span>
+</div>
+<h4 class="font-headline-sm text-[16px] text-surface-container-lowest font-bold mb-2">Constrained JSON</h4>
+<!-- Monospace JSON Slip -->
+<div class="bg-[#1C1C17] border border-[#737782] p-2.5 font-label-code text-[11px] text-[#ACC7FF] leading-snug overflow-x-auto">
+<pre class="whitespace-pre-wrap">{
+  "type": "close_room",
+  "room_id": "lab_a",
+  "start_slot": 10,
+  "end_slot": 16,
+  "protect": "coding_assess"
+}</pre>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t border-outline/30 flex items-center justify-between">
+<span class="font-label-code text-[10px] text-outline-variant">Zero Schedule Authority</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed">code_blocks</span>
+</div>
+</div>
+<!-- CONNECTOR ARROW 2 -> 3 -->
+<div class="hidden md:flex absolute left-[39.4%] top-1/2 -translate-y-1/2 z-20 pointer-events-none text-primary">
+<svg class="w-6 h-6 transform rotate-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 12h14m-5-5l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- ==================== TILE 3: Z3 SOLVER (CORE ACTIVE) ==================== -->
+<div class="bg-blueprint-grid border-2 border-primary p-4 flex flex-col justify-between shadow-tactile relative group hover:-translate-y-0.5 transition-transform">
+<!-- Active Stamp Ribbon -->
+<div class="absolute -top-3 right-3 bg-[#FFE79A] border border-[#1F2A44] px-1.5 py-0.5 font-stamp-badge text-[9px] text-[#1F2A44] font-bold shadow-sm">
+              SOLVER CORE
+            </div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-stamp-badge text-[10px] text-primary font-bold tracking-wider">Step 03 // SMT SAT</span>
+<span class="material-symbols-outlined text-primary text-[18px]">psychology</span>
+</div>
+<h4 class="font-headline-sm text-[16px] text-[#1F2A44] font-bold mb-2">Z3 Theorem Prover</h4>
+<!-- Blueprint Formulation Box -->
+<div class="bg-[#FFFCF5] border border-primary/40 p-2.5 font-label-code text-[11px] text-primary leading-tight">
+<div class="font-bold text-[10px] text-outline uppercase mb-1">SMT Predicate:</div>
+<div class="text-[#0A458F] font-semibold">Minimize Σ (Displacement_i)</div>
+<div class="text-on-surface-variant text-[10px] mt-1">
+                  s.t. Cap ≥ 40<br>
+                  ∧ Equip = True<br>
+                  ∧ NonOverlap = True
+                </div>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t border-primary/30 flex items-center justify-between">
+<span class="font-stamp-badge text-[11px] text-[#5E8C61] font-bold">Solved in 42ms</span>
+<span class="font-label-code text-[10px] bg-primary-fixed text-primary px-1.5 py-0.2 border border-primary">OPTIMAL</span>
+</div>
+</div>
+<!-- CONNECTOR ARROW 3 -> 4 -->
+<div class="hidden md:flex absolute left-[59.5%] top-1/2 -translate-y-1/2 z-20 pointer-events-none text-primary">
+<svg class="w-6 h-6 transform -rotate-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 12h14m-5-5l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- ==================== TILE 4: ZERO-TRUST DETERMINISTIC VALIDATOR ==================== -->
+<div class="bg-[#FFFCF5] border border-[#1F2A44] p-4 flex flex-col justify-between shadow-tactile-sm relative group hover:-translate-y-0.5 transition-transform">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-stamp-badge text-[10px] text-[#5E8C61] font-bold tracking-wider">Step 04 // Audit</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#5E8C61] border border-[#1F2A44]"></span>
+</div>
+<h4 class="font-headline-sm text-[16px] text-[#1F2A44] font-bold mb-2">Pure-Python Gate</h4>
+<!-- Checkmarks List -->
+<div class="bg-[#F6F3EA] border border-[#1F2A44]/30 p-2 font-label-code text-[11px] space-y-1">
+<div class="flex items-center text-[#5E8C61] font-medium">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span>
+<span class="">Cap Verified</span>
+</div>
+<div class="flex items-center text-[#5E8C61] font-medium">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span>
+<span class="">HW Parity Pass</span>
+</div>
+<div class="flex items-center text-[#5E8C61] font-medium">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span>
+<span class="">Faculty Slot Clear</span>
+</div>
+<div class="flex items-center text-[#5E8C61] font-medium">
+<span class="material-symbols-outlined text-[14px] mr-1">check_circle</span>
+<span class="">Locks Respected</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t border-[#1F2A44]/20 flex items-center justify-between">
+<span class="font-stamp-badge text-[10px] text-[#5E8C61] font-bold">8/8 CHECKS OK</span>
+<span class="material-symbols-outlined text-[16px] text-[#5E8C61]">verified_user</span>
+</div>
+</div>
+<!-- CONNECTOR ARROW 4 -> 5 -->
+<div class="hidden md:flex absolute left-[79.6%] top-1/2 -translate-y-1/2 z-20 pointer-events-none text-primary">
+<svg class="w-6 h-6 transform rotate-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 12h14m-5-5l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+<!-- ==================== TILE 5: APPROVE & SYNC ==================== -->
+<div class="bg-[#FFFCF5] border border-[#1F2A44] p-4 flex flex-col justify-between shadow-tactile-sm relative group hover:-translate-y-0.5 transition-transform">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-stamp-badge text-[10px] text-[#1F2A44] font-bold tracking-wider">Step 05 // Emit</span>
+<span class="material-symbols-outlined text-[18px] text-[#5E8C61]">send</span>
+</div>
+<h4 class="font-headline-sm text-[16px] text-[#1F2A44] font-bold mb-2">Verified Dispatch</h4>
+<!-- Rubber Stamp Box -->
+<div class="relative my-2 py-3 px-2 border-2 border-dashed border-[#5E8C61] text-center bg-[#F6F8F6]">
+<div class="font-stamp-badge text-[12px] text-[#5E8C61] tracking-widest uppercase border-2 border-[#5E8C61] px-2 py-1 transform -rotate-3 inline-block font-extrabold">
+                  VERIFIED DISPATCH
+                </div>
+<div class="font-label-code text-[10px] text-outline mt-2 leading-tight">
+                  Auto .ics payload sent to 142 students &amp; 3 proctors.
+                </div>
+</div>
+</div>
+<div class="mt-4 pt-2 border-t border-[#1F2A44]/20 flex items-center justify-between">
+<span class="font-label-code text-[10px] text-[#1F2A44] font-semibold">0 Coordinator Calls</span>
+<span class="material-symbols-outlined text-[16px] text-primary">notifications_active</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CALLOUT ARTIFACT: PROMINENT YELLOW STICKY NOTE TAPED OVER CANVAS -->
+<div class="pl-14 md:pl-20 mb-16 flex justify-center">
+<div class="relative w-full max-w-2xl bg-[#FFE79A] border-2 border-[#1F2A44] p-6 shadow-tactile transform rotate-[-0.75deg]">
+<!-- Washi Tape Pins at Top Corners -->
+<div class="washi-tape absolute -top-3 left-10 w-24 h-6 transform -rotate-3 border-l border-r border-[#1F2A44]/20"></div>
+<div class="washi-tape absolute -top-3 right-12 w-20 h-6 transform rotate-2 border-l border-r border-[#1F2A44]/20"></div>
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-[#785900] text-3xl select-none mt-1">push_pin</span>
+<div>
+<span class="font-stamp-badge text-[10px] text-[#785900] uppercase font-bold tracking-widest block mb-1">
+              REGISTRAR OPERATIONAL PRINCIPLE // ZERO SYNTHETIC AMBIGUITY
+            </span>
+<p class="font-headline-md text-[26px] text-[#1F2A44] italic font-semibold leading-snug">
+              “Gemma only translates. It never decides the schedule. <span class="underline decoration-primary decoration-2 underline-offset-4 font-bold text-primary">Math decides.</span>”
+            </p>
+<p class="font-body-sm text-body-sm text-[#5B4300] mt-2 font-medium">
+              By decoupling natural-language parsing from the discrete combinatorial search, Campus Rescue eliminates hallucinations entirely. The solver either returns a mathematically valid schedule or provably proves infeasibility.
+            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- TECHNICAL CONSTRAINT CARDS: 3-COLUMN FORMAL LOGIC ROW -->
+<section class="pl-14 md:pl-20">
+<div class="mb-6 flex items-center justify-between">
+<div>
+<span class="font-stamp-badge text-stamp-badge text-primary uppercase font-bold tracking-wider block mb-1">
+            FORMAL PROOF SPECIFICATIONS
+          </span>
+<h3 class="font-headline-md text-headline-md text-[#1F2A44] font-bold">
+            Formal Logic Predicates Satisfied in Z3
+          </h3>
+</div>
+<span class="hidden md:inline-block font-label-code text-body-sm text-outline border border-[#1F2A44]/30 bg-[#FFFCF5] px-3 py-1">
+          SMT-LIB2 COMPLIANT
+        </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1: Hard Capacity Bounds -->
+<div class="bg-[#FFFCF5] border-1.5 border-[#1F2A44] rounded-[6px] p-5 shadow-paper flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3 pb-2 border-b border-[#1F2A44]/20">
+<span class="font-stamp-badge text-[11px] text-[#5E8C61] border border-[#5E8C61] px-1.5 py-0.5 transform -rotate-1 font-bold">
+                VERIFIED PREDICATE
+              </span>
+<span class="font-label-code text-[11px] text-outline">AXIOM 01</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-[#1F2A44] mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">groups</span>
+              Hard Capacity Bounds
+            </h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+              Enforces strict fire-code limits and pedagogical density ratios across all candidate reassignment rooms.
+            </p>
+<div class="bg-[#F1ECE1] p-3 font-label-code text-[12px] text-[#1F2A44] border border-[#1F2A44]/20 leading-relaxed">
+<code>∀ c ∈ Classes, r ∈ Rooms:<br>
+              Assigned(c, r) ⇒ (Enrollment(c) ≤ Capacity(r))</code>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#1F2A44]/10 flex items-center justify-between text-body-sm font-label-code">
+<span class="text-outline">Violations Allowed</span>
+<span class="text-error font-bold">0 (Hard Constraint)</span>
+</div>
+</div>
+<!-- Card 2: Equipment Parity -->
+<div class="bg-[#FFFCF5] border-1.5 border-[#1F2A44] rounded-[6px] p-5 shadow-paper flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3 pb-2 border-b border-[#1F2A44]/20">
+<span class="font-stamp-badge text-[11px] text-primary border border-primary px-1.5 py-0.5 transform rotate-1 font-bold">
+                PROTECTED PREDICATE
+              </span>
+<span class="font-label-code text-[11px] text-outline">AXIOM 02</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-[#1F2A44] mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">devices_other</span>
+              Equipment Parity
+            </h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+              Guarantees hardware resources (e.g. GPU clusters, fume hoods, Tier-4 AV) match or exceed original specifications.
+            </p>
+<div class="bg-[#F1ECE1] p-3 font-label-code text-[12px] text-[#1F2A44] border border-[#1F2A44]/20 leading-relaxed">
+<code>∀ req ∈ c.HardwareRequirements:<br>
+              Assigned(c, r) ⇒ (req ⊆ r.Inventory)</code>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#1F2A44]/10 flex items-center justify-between text-body-sm font-label-code">
+<span class="text-outline">Hardware Match</span>
+<span class="text-primary font-bold">Deterministic 1:1</span>
+</div>
+</div>
+<!-- Card 3: Minimal Displacement Metric -->
+<div class="bg-[#FFFCF5] border-1.5 border-[#1F2A44] rounded-[6px] p-5 shadow-paper flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3 pb-2 border-b border-[#1F2A44]/20">
+<span class="font-stamp-badge text-[11px] text-[#785900] bg-[#FFE79A] border border-[#1F2A44] px-1.5 py-0.5 transform -rotate-1 font-bold">
+                OPTIMIZATION GOAL
+              </span>
+<span class="font-label-code text-[11px] text-outline">OBJECTIVE</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-[#1F2A44] mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">social_distance</span>
+              Minimal Displacement Metric
+            </h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+              Calculates shortest spatial distance vector and minimizes domino disruptions to innocent secondary courses.
+            </p>
+<div class="bg-[#F1ECE1] p-3 font-label-code text-[12px] text-[#1F2A44] border border-[#1F2A44]/20 leading-relaxed">
+<code>Obj = min [ α · Dist(r_old, r_new) +<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;β · ΔTime + γ · RippleCount ]</code>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#1F2A44]/10 flex items-center justify-between text-body-sm font-label-code">
+<span class="text-outline">Ripple Containment</span>
+<span class="text-[#5E8C61] font-bold">&lt; 3 Courses Max</span>
+</div>
+</div>
+</div>
+</section>
+<!-- BOTTOM PERFORATED MARGIN CONTINUATION -->
+<div class="pl-14 md:pl-20 mt-16 pt-8 border-t-2 border-dashed border-[#6B6A63]/50 flex items-center justify-between">
+<div class="flex items-center gap-3 font-label-code text-body-sm text-outline">
+<span class="w-3 h-3 bg-primary rounded-none inline-block border border-[#1F2A44]"></span>
+<span class="">CONTINUOUS LEDGER RECORD // PROCEEDING TO 04 SIMULATOR</span>
+</div>
+<div class="font-stamp-badge text-stamp-badge text-outline">
+        PAGE 04 OF 09 [42% MARGIN RUN]
+      </div>
+</div>
+</main>
+<!-- FOOTER (Using shared multi-column directory blueprint) -->
+<footer class="w-full bg-inverse-surface border-t-2 border-primary-container text-on-tertiary-container mt-12">
+<div class="max-w-[1200px] mx-auto px-margin py-space-xl grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Brand & Archival Info -->
+<div class="space-y-3">
+<div class="font-headline-md text-headline-md font-bold text-inverse-on-surface">
+          Campus Rescue
+        </div>
+<p class="font-body-sm text-body-sm text-outline-variant max-w-xs leading-relaxed">
+          © 2025 Campus Rescue Academic Systems Inc. Formally verified SAT/SMT scheduling pipelines. Printed on ledger archival stock.
+        </p>
+<div class="pt-2">
+<span class="font-stamp-badge text-[10px] bg-[#1C1C17] text-[#5E8C61] border border-[#5E8C61] px-2 py-1">
+            Z3 v4.12.2 VERIFIED
+          </span>
+</div>
+</div>
+<!-- Links Column 1 -->
+<div>
+<h5 class="font-headline-sm text-headline-sm text-inverse-on-surface mb-3">Core Engines</h5>
+<ul class="space-y-2 font-body-sm text-body-sm">
+<li class=""><a class="text-outline-variant hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">Constraint Engine</a></li>
+<li class=""><a class="text-inverse-on-surface font-semibold hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">Curricular Ledger</a></li>
+<li class=""><a class="text-outline-variant hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">Conflict Repairs</a></li>
+<li class=""><a class="text-outline-variant hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">Export SchedNET</a></li>
+</ul>
+</div>
+<!-- Links Column 2 -->
+<div>
+<h5 class="font-headline-sm text-headline-sm text-inverse-on-surface mb-3">Registrar Specs</h5>
+<ul class="space-y-2 font-body-sm text-body-sm">
+<li class=""><a class="text-outline-variant hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">Security Policy</a></li>
+<li class=""><a class="text-outline-variant hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">SOC-2 Audit</a></li>
+<li class=""><a class="text-outline-variant hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">Archival Log</a></li>
+<li class=""><a class="text-outline-variant hover:text-tertiary-fixed-dim hover:underline underline-offset-2 transition-colors" href="#">Registrar Support</a></li>
+</ul>
+</div>
+<!-- Live Terminal Metric -->
+<div class="bg-[#1C1C17] border border-[#737782]/40 p-4">
+<div class="flex items-center justify-between pb-2 mb-2 border-b border-[#737782]/30">
+<span class="font-label-code text-[11px] text-tertiary-fixed">SAT/SMT DAEMON</span>
+<span class="w-2 h-2 rounded-full bg-[#5E8C61] animate-ping"></span>
+</div>
+<div class="font-label-code text-[11px] text-outline-variant space-y-1">
+<div class="">Clauses Evaluated: <span class="text-inverse-on-surface">1,402,891</span></div>
+<div class="">Avg Resolution: <span class="text-[#5E8C61]">38.4 ms</span></div>
+<div class="">Hallucination Rate: <span class="text-tertiary-fixed">0.000%</span></div>
+<div class="">Audit Hash: <span class="text-primary-fixed-dim">0x8F9C...2B14</span></div>
+</div>
+</div>
+</div>
+</footer>
+
+
+</body></html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Campus Rescue — 01 / Problem (Scroll 12%)</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#acc7ff",
+            "primary-fixed": "#d7e2ff",
+            "on-tertiary-fixed": "#261a00",
+            "surface-container": "#f1eee5",
+            "background": "#fcf9f0",
+            "tertiary-fixed-dim": "#f0c04f",
+            "surface-container-low": "#f6f3ea",
+            "on-secondary-container": "#56607d",
+            "on-background": "#1c1c17",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#0f1b34",
+            "on-primary-fixed": "#001a40",
+            "on-tertiary-container": "#ffd271",
+            "on-surface-variant": "#434751",
+            "surface-tint": "#2f5da8",
+            "primary-container": "#2f5da8",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#ebe8df",
+            "secondary": "#535e7b",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#e5e2da",
+            "secondary-container": "#d1dcfe",
+            "surface-dim": "#dddad1",
+            "inverse-primary": "#acc7ff",
+            "secondary-fixed-dim": "#bbc6e7",
+            "secondary-fixed": "#d9e2ff",
+            "inverse-surface": "#31312b",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#ffdf9e",
+            "on-secondary-fixed-variant": "#3b4662",
+            "on-primary-fixed-variant": "#0a458f",
+            "on-secondary": "#ffffff",
+            "surface": "#fcf9f0",
+            "on-surface": "#1c1c17",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2da",
+            "inverse-on-surface": "#f4f1e8",
+            "primary": "#0a458f",
+            "on-tertiary-fixed-variant": "#5b4300",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#c8d9ff",
+            "tertiary": "#5b4300",
+            "outline": "#737782",
+            "tertiary-container": "#785900",
+            "surface-bright": "#fcf9f0",
+            "outline-variant": "#c3c6d3"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          spacing: {
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem"
+          },
+          fontFamily: {
+            "headline-sm": ["Newsreader", "serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "stamp-badge": ["JetBrains Mono", "monospace"],
+            "headline-xl": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "label-code": ["JetBrains Mono", "monospace"],
+            "body-md": ["Inter", "sans-serif"]
+          },
+          fontSize: {
+            "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+            "body-sm": ["12px", { lineHeight: "16px", fontWeight: "400" }],
+            "stamp-badge": ["11px", { lineHeight: "12px", letterSpacing: "0.12em", fontWeight: "700" }],
+            "headline-xl": ["44px", { lineHeight: "52px", letterSpacing: "-0.02em", fontWeight: "700" }],
+            "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "label-code": ["13px", { lineHeight: "18px", fontWeight: "500" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Continuous Technical Blueprint Paper Background */
+    .bg-academic-grid {
+      background-color: #F6F1E7;
+      background-image: 
+        linear-gradient(to right, #E6DDCB 1px, transparent 1px),
+        linear-gradient(to bottom, #E6DDCB 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Handcrafted tactile paper shadows */
+    .card-paper-offset {
+      box-shadow: 4px 4px 0px rgba(31, 42, 68, 0.12);
+    }
+    .btn-press-offset {
+      box-shadow: 3px 3px 0px #1F2A44;
+    }
+    .btn-press-offset:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px transparent;
+    }
+    .sticky-note-shadow {
+      box-shadow: 3px 3px 0px rgba(107, 106, 99, 0.22);
+    }
+    
+    /* Washi tape realism */
+    .washi-tape {
+      background: rgba(230, 221, 203, 0.78);
+      border-left: 1px dashed rgba(107, 106, 99, 0.4);
+      border-right: 1px dashed rgba(107, 106, 99, 0.4);
+    }
+
+    .washi-tape-red {
+      background: rgba(200, 85, 61, 0.28);
+      border-left: 1px dashed rgba(200, 85, 61, 0.6);
+      border-right: 1px dashed rgba(200, 85, 61, 0.6);
+    }
+  </style>
+</head>
+<body class="bg-academic-grid text-[#1F2A44] min-h-screen relative antialiased selection:bg-[#FFE79A] selection:text-[#1F2A44]">
+<!-- CONTINUOUS STORY THREAD: Dotted pen line passing unbroken down x=72px -->
+<div class="absolute left-[72px] top-16 bottom-0 w-[2px] pointer-events-none z-10 flex flex-col items-center"><div class="w-full h-full border-l-2 border-dashed border-[#1F2A44]/30"></div></div>
+<!-- FIXED NAVBAR: SCROLL POSITION 12% (01 / PROBLEM ACTIVE) -->
+<header class="sticky top-0 w-full z-50 h-16 bg-[#F6F1E7]/95 backdrop-blur-md border-b border-[#1F2A44]/20 shadow-[0_4px_12px_rgba(31,42,68,0.04)]"><div class="max-w-[1440px] mx-auto px-margin h-full flex items-center justify-between gap-6"><div class="flex items-center gap-2.5 flex-shrink-0"><div class="w-7 h-7 border-[1.5px] border-[#1F2A44] bg-[#2F5DA8] flex items-center justify-center text-[#FFFCF5] rounded shadow-[1px_1px_0px_#1F2A44]"><span class="material-symbols-outlined text-[16px]" data-icon="architecture">architecture</span></div><span class="font-headline-md text-[19px] font-bold text-[#1F2A44] tracking-tight">Campus Rescue</span></div><nav class="hidden md:flex items-center space-x-7 flex-shrink-0"><a class="relative group font-body-md text-body-md font-bold text-[#1F2A44] pb-1" href="#problem">Problem<span class="absolute left-0 bottom-0 w-full h-[6px] bg-[#E9B949] -z-10 rounded-sm opacity-90"></span></a><a class="font-body-md text-body-md font-medium text-[#6B6A63] hover:text-[#1F2A44] transition-colors pb-1" href="#features">Features</a><a class="font-body-md text-body-md font-medium text-[#6B6A63] hover:text-[#1F2A44] transition-colors pb-1" href="#how-it-works">How It Works</a><a class="font-body-md text-body-md font-medium text-[#6B6A63] hover:text-[#1F2A44] transition-colors pb-1" href="#simulator">Simulator</a><a class="font-body-md text-body-md font-medium text-[#6B6A63] hover:text-[#1F2A44] transition-colors pb-1" href="#why-us">Why Us</a><a class="font-body-md text-body-md font-medium text-[#6B6A63] hover:text-[#1F2A44] transition-colors pb-1" href="#docs">Docs</a></nav><div class="flex items-center gap-3.5 flex-shrink-0"><span class="hidden xl:inline-flex items-center gap-1 font-label-code text-[11px] text-[#6B6A63] bg-[#E5E2DA] border border-[#1F2A44]/20 px-2 py-0.5 rounded"><span class="w-1.5 h-1.5 rounded-full bg-[#5E8C61]"></span>SMT/Z3 CORE v4.12</span><div class="hidden lg:flex items-center gap-1.5 px-3 py-1 bg-[#FFFCF5] border border-[#1F2A44]/25 rounded-full shadow-[1px_1px_0px_rgba(31,42,68,0.1)]"><div class="flex items-center gap-1"><div class="w-5 h-5 rounded-full bg-[#E9B949] border-[1.5px] border-[#1F2A44] flex items-center justify-center text-[10px] font-label-code font-bold text-[#1F2A44] animate-pulse">1</div><span class="font-label-code text-[10px] font-bold text-[#1F2A44]">Disruption</span></div><span class="w-3 border-t border-dashed border-[#1F2A44]/40"></span><div class="flex items-center gap-1 opacity-45"><div class="w-4 h-4 rounded-full border border-[#1F2A44] flex items-center justify-center text-[9px] font-label-code text-[#1F2A44]">2</div><span class="font-label-code text-[10px] text-[#6B6A63]">Parse</span></div><span class="w-2 border-t border-dashed border-[#1F2A44]/40"></span><div class="flex items-center gap-1 opacity-45"><div class="w-4 h-4 rounded-full border border-[#1F2A44] flex items-center justify-center text-[9px] font-label-code text-[#1F2A44]">3</div><span class="font-label-code text-[10px] text-[#6B6A63]">Solve</span></div><span class="w-2 border-t border-dashed border-[#1F2A44]/40"></span><div class="flex items-center gap-1 opacity-45"><div class="w-4 h-4 rounded-full border border-[#1F2A44] flex items-center justify-center text-[9px] font-label-code text-[#1F2A44]">4</div><span class="font-label-code text-[10px] text-[#6B6A63]">Verify</span></div><span class="w-2 border-t border-dashed border-[#1F2A44]/40"></span><div class="flex items-center gap-1 opacity-45"><div class="w-4 h-4 rounded-full border border-[#1F2A44] flex items-center justify-center text-[9px] font-label-code text-[#1F2A44]">5</div><span class="font-label-code text-[10px] text-[#6B6A63]">Broadcast</span></div></div><button class="bg-[#2F5DA8] hover:bg-[#254b87] text-[#FFFCF5] font-label-code text-label-code px-3.5 py-1.5 border-[1.5px] border-[#1F2A44] rounded btn-press-offset transition-all flex items-center gap-1.5 shadow-[2px_2px_0px_#1F2A44]"><span class="material-symbols-outlined text-[15px]" data-icon="terminal">terminal</span><span class="">Launch Console</span></button></div></div><div class="absolute bottom-0 left-0 h-[3px] w-[12%] bg-[#2F5DA8] z-20"></div></header>
+<!-- MAIN CANVAS (Centered 1200px Grid) -->
+<main class="max-w-[1200px] mx-auto px-margin pt-8 pb-20 relative">
+<!-- RUBBER STAMP ANCHOR ON STORY THREAD AT LEFT MARGIN -->
+<div class="absolute -left-[4px] top-12 z-20 hidden md:block">
+<div class="w-[38px] h-[38px] rounded-full bg-[#E9B949] border-2 border-[#1F2A44] flex flex-col items-center justify-center shadow-[2px_2px_0px_#1F2A44] transform -rotate-6">
+<span class="font-stamp-badge text-[9px] leading-tight text-[#1F2A44] font-extrabold text-center">01</span>
+<span class="font-stamp-badge text-[6px] tracking-tighter text-[#1F2A44]">DISRUPT</span>
+</div>
+</div>
+<!-- SECTION 01 / PROBLEM HEADER -->
+<div class="pl-14 md:pl-16 mb-12">
+<!-- Monospace Typewriter Section Tag -->
+<div class="inline-flex items-center gap-2 px-2.5 py-0.5 bg-[#FFFCF5] border border-[#1F2A44] rounded-DEFAULT shadow-[1px_1px_0px_#1F2A44] mb-3">
+<span class="w-1.5 h-1.5 bg-[#C8553D] rounded-full"></span>
+<span class="font-label-code text-label-code font-bold text-[#1F2A44] tracking-wider uppercase">01 / PROBLEM STATEMENT</span>
+</div>
+<!-- Main Newsreader Heading with Sketched Red Scribble Ring -->
+<h1 class="font-headline-xl text-headline-xl text-[#1F2A44] tracking-tight leading-tight max-w-3xl">
+        One closed room. 
+        <span class="relative inline-block whitespace-nowrap px-2">
+          Ten WhatsApp clashes.
+          <!-- Organic Hand-drawn Red Scribble SVG Circle -->
+<svg class="absolute -inset-x-2 -inset-y-2.5 w-[108%] h-[140%] pointer-events-none overflow-visible text-[#C8553D]" fill="none" viewBox="0 0 460 70">
+<path class="opacity-90" d="M 8,36 C 18,12 110,4 235,6 C 360,8 448,15 452,38 C 456,60 380,68 240,66 C 100,64 12,56 6,36 C 2,22 80,10 180,8" stroke="currentColor" stroke-dasharray="3200" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path class="opacity-60" d="M 12,32 C 30,16 130,8 242,10 C 370,12 444,22 446,42 C 448,58 350,64 220,62" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"></path>
+</svg>
+</span>
+</h1>
+<p class="font-body-lg text-body-lg text-[#6B6A63] mt-3 max-w-2xl">
+        A ruptured HVAC pipe shuts down Science Wing B at 08:42 AM. Within four minutes, departmental coordinators revert to frantic instant messaging, uncoordinated spreadsheet edits, and cascading hall collisions.
+      </p>
+</div>
+<!-- TWO-COLUMN CONTRAST DISPLAY WITH TRANSITION SKETCH ARROW -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pl-10 md:pl-12 mb-14 relative">
+<!-- LEFT COLUMN (5 COLS): THE MANUAL CHAOS -->
+<div class="lg:col-span-5 relative">
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="font-label-code text-[12px] font-bold tracking-wider text-[#C8553D] flex items-center gap-1.5 uppercase">
+<span class="material-symbols-outlined text-[16px]" data-icon="error">error</span>
+            The Manual Chaos
+          </span>
+<span class="font-label-code text-body-sm text-[#6B6A63]">Entropy: Unbounded</span>
+</div>
+<!-- Overlapping Messy Sticky Note Collage Container -->
+<div class="relative bg-[#FBF7EE] p-6 border-[1.5px] border-dashed border-[#C8553D]/50 rounded-lg min-h-[380px] overflow-visible">
+<!-- Background faint watermarking -->
+<div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none">
+<span class="font-headline-xl text-8xl font-black">FAIL</span>
+</div>
+<!-- Rubber Stamp: UNVERIFIED HEURISTIC (tilted 3deg red) -->
+<div class="absolute top-3 right-3 z-30 transform rotate-6 pointer-events-none">
+<div class="border-[2px] border-[#C8553D] px-2.5 py-1 bg-[#FFFCF5]/90 rounded-DEFAULT">
+<span class="font-stamp-badge text-stamp-badge text-[#C8553D] tracking-widest uppercase">UNVERIFIED HEURISTIC</span>
+</div>
+</div>
+<!-- Sticky Note 1: Maker Lab Clash -->
+<div class="relative z-10 w-[90%] bg-[#FFFCF5] p-3.5 border border-[#1F2A44] shadow-[3px_3px_0px_rgba(200,85,61,0.25)] transform -rotate-2 mb-4">
+<div class="w-16 h-3 washi-tape-red absolute -top-1.5 left-8"></div>
+<div class="flex items-center gap-1.5 text-[#C8553D] mb-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="chat">chat</span>
+<span class="font-label-code text-[10px] font-bold">Faculty WhatsApp [08:44]</span>
+</div>
+<p class="font-body-md text-body-md font-medium text-[#1F2A44] leading-snug">
+              “Shifted CS-301 to Maker Lab D?? But the 3D printers are running at full load! Students can't hear lecture!”
+            </p>
+</div>
+<!-- Sticky Note 2: Rain & Locked Hall (Yellow accent tilted) -->
+<div class="relative z-20 w-[92%] ml-auto bg-[#FFE79A] p-3.5 border border-[#1F2A44] sticky-note-shadow transform rotate-3 mb-4">
+<div class="w-14 h-3 washi-tape absolute -top-1.5 right-10"></div>
+<div class="flex items-center justify-between text-[#1F2A44] mb-1">
+<span class="font-label-code text-[10px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" data-icon="schedule">schedule</span> 08:49 AM
+              </span>
+<span class="font-stamp-badge text-[9px] bg-[#C8553D] text-[#FFFCF5] px-1 rounded-sm">COLLISION</span>
+</div>
+<p class="font-body-md text-body-md font-medium text-[#1F2A44] leading-snug">
+              “Is the Coding Exam moved? 60 students standing in rain outside Lab A while ME-210 insists it's their slot!”
+            </p>
+</div>
+<!-- Sticky Note 3: Key missing chaos -->
+<div class="relative z-10 w-[84%] bg-[#FFFCF5] p-3 border border-[#1F2A44] shadow-[2px_2px_0px_rgba(31,42,68,0.15)] transform -rotate-1">
+<div class="flex items-center gap-1 text-[#6B6A63] mb-1">
+<span class="material-symbols-outlined text-[13px]" data-icon="key">key</span>
+<span class="font-label-code text-[10px]">Operations Desk</span>
+</div>
+<p class="font-body-md text-body-md text-[#1F2A44]">
+              “Who has the projector key for Seminar C?? The doors were swapped last night without notifying facilities.”
+            </p>
+</div>
+</div>
+</div>
+<!-- CENTER TRANSITION (2 COLS): Hand-drawn sketched ink arrow -->
+<div class="lg:col-span-2 flex flex-col items-center justify-center py-4 lg:py-0">
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-code text-[11px] font-bold text-[#2F5DA8] uppercase tracking-wider text-center">
+            Formal SAT/SMT Pipeline
+          </span>
+<!-- Dynamic Arrow SVG -->
+<svg class="w-16 h-12 text-[#2F5DA8] overflow-visible" fill="none" viewBox="0 0 64 36">
+<!-- Sketched arching line -->
+<path d="M 4,18 Q 30,6 54,18" stroke="currentColor" stroke-linecap="round" stroke-width="2.2"></path>
+<path d="M 6,19 Q 31,8 52,19" opacity="0.6" stroke="currentColor" stroke-dasharray="2 3" stroke-width="1.2"></path>
+<!-- Arrow tip -->
+<path d="M 44,11 L 56,18 L 44,26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+<span class="font-label-code text-[10px] text-[#6B6A63] bg-[#E5E2DA] px-2 py-0.5 rounded border border-[#1F2A44]/20">
+            0.014s Determinism
+          </span>
+</div>
+</div>
+<!-- RIGHT COLUMN (5 COLS): THE CAMPUS RESCUE RESOLUTION -->
+<div class="lg:col-span-5 relative">
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="font-label-code text-[12px] font-bold tracking-wider text-[#2F5DA8] flex items-center gap-1.5 uppercase">
+<span class="material-symbols-outlined text-[16px]" data-icon="verified">verified</span>
+            The Campus Rescue Resolution
+          </span>
+<span class="font-label-code text-body-sm text-[#5E8C61] font-semibold">Invariant SAT: 100%</span>
+</div>
+<!-- Archival Ledger Card (#FFFCF5, 1.5px border, 4px hard shadow) -->
+<div class="bg-[#FFFCF5] border-[1.5px] border-[#1F2A44] rounded-lg card-paper-offset p-5 relative overflow-hidden">
+<!-- Rubber Stamp: MATHEMATICALLY VERIFIED (Sage Green #5E8C61, tilted -2deg) -->
+<div class="absolute top-4 right-4 z-20 transform -rotate-2">
+<div class="border-2 border-[#5E8C61] px-2.5 py-1 bg-[#FFFCF5] rounded-DEFAULT shadow-[1px_1px_0px_#5E8C61]">
+<span class="font-stamp-badge text-[11px] text-[#5E8C61] font-bold tracking-widest uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" data-icon="check_circle">check_circle</span>
+                MATHEMATICALLY VERIFIED
+              </span>
+</div>
+</div>
+<!-- Header info -->
+<div class="border-b border-[#1F2A44]/15 pb-3 mb-4">
+<span class="font-label-code text-[11px] text-[#6B6A63]">DISPATCH MANIFEST #CR-8820-Z3</span>
+<h3 class="font-headline-sm text-headline-sm text-[#1F2A44] mt-0.5">Automated Feasibility Proof</h3>
+</div>
+<!-- Resolved Dispatch Row 1 -->
+<div class="bg-[#FBF7EE] border border-[#1F2A44]/20 rounded p-3 mb-3 relative">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-[12px] font-bold text-[#1F2A44]">CS-301: Algorithm Lab</span>
+<span class="font-label-code text-[10px] bg-[#E9B949] text-[#1F2A44] font-bold px-1.5 py-0.5 rounded">RELOCATED</span>
+</div>
+<div class="mt-2 text-body-md font-body-md text-[#1F2A44] flex items-center gap-2">
+<span class="line-through text-[#6B6A63] text-[13px]">Science Wing B-102</span>
+<span class="material-symbols-outlined text-[14px] text-[#2F5DA8]" data-icon="arrow_forward">arrow_forward</span>
+<span class="font-semibold text-[#2F5DA8] bg-[#D7E2FF]/60 px-1.5 py-0.5 rounded">Turing Hall 204</span>
+</div>
+<div class="mt-2 pt-1.5 border-t border-[#1F2A44]/10 flex items-center justify-between text-[11px] font-label-code text-[#6B6A63]">
+<span class="">Cap: 64/70 seats</span>
+<span class="text-[#5E8C61] font-medium flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]" data-icon="done_all">done_all</span> 0 room overlaps
+              </span>
+</div>
+</div>
+<!-- Resolved Dispatch Row 2 -->
+<div class="bg-[#FFFCF5] border border-[#1F2A44]/20 rounded p-3 mb-4">
+<div class="flex items-center justify-between">
+<span class="font-label-code text-[12px] font-bold text-[#1F2A44]">ME-210: CAD Workshop</span>
+<span class="font-label-code text-[10px] bg-[#D7E2FF] text-[#0A458F] font-bold px-1.5 py-0.5 rounded">PROTECTED</span>
+</div>
+<div class="mt-1.5 text-body-md font-body-md text-[#1F2A44] flex items-center gap-2">
+<span class="font-medium">Assigned: Robotics Annex B (Workstations locked)</span>
+</div>
+<div class="mt-2 pt-1.5 border-t border-[#1F2A44]/10 flex items-center justify-between text-[11px] font-label-code text-[#6B6A63]">
+<span class="">Hardware check: PASSED</span>
+<span class="text-[#5E8C61] font-medium">No schedule variance</span>
+</div>
+</div>
+<!-- Computational Solver Diagnostic Footer -->
+<div class="bg-[#F1ECE1] border border-[#1F2A44]/15 rounded p-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#5E8C61]"></span>
+<span class="font-label-code text-[11px] text-[#1F2A44]">Z3 Solver: sat (2,180 clauses)</span>
+</div>
+<span class="font-label-code text-[11px] font-bold text-[#2F5DA8]">Time: 0.014s</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ROW OF THREE TACTILE YELLOW STICKY NOTES (#FFE79A) FOR KEY PAIN METRICS -->
+<div class="pl-10 md:pl-12">
+<div class="border-t-2 border-dashed border-[#1F2A44]/20 pt-8 mb-4 flex items-center justify-between">
+<span class="font-label-code text-[11px] font-bold text-[#6B6A63] uppercase tracking-wider">
+          Observed Institutional Friction Under Manual Rescheduling
+        </span>
+<span class="font-label-code text-[11px] text-[#6B6A63]">Audit Source: Registrar Worklog Benchmark</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+<!-- Sticky Note 1: 45 Minutes Wasted -->
+<div class="bg-[#FFE79A] border-[1.5px] border-[#1F2A44] rounded-sm p-5 sticky-note-shadow relative transform -rotate-1 hover:rotate-0 transition-transform">
+<!-- Washi Tape -->
+<div class="w-16 h-3.5 washi-tape absolute -top-2 left-1/2 -translate-x-1/2"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline-lg text-headline-lg font-bold text-[#1F2A44]">45 min</span>
+<span class="material-symbols-outlined text-[#C8553D] text-[20px]" data-icon="timer_off">timer_off</span>
+</div>
+<p class="font-body-md text-body-md text-[#1F2A44] font-medium leading-snug">
+            45 minutes of manual reshuffling wasted per single disruption event across faculty chains.
+          </p>
+<div class="mt-4 pt-2 border-t border-[#1F2A44]/20 font-label-code text-[11px] text-[#6B6A63]">
+            Constraint drift: Exponential
+          </div>
+</div>
+<!-- Sticky Note 2: Hidden Double-Bookings -->
+<div class="bg-[#FFE79A] border-[1.5px] border-[#1F2A44] rounded-sm p-5 sticky-note-shadow relative transform rotate-1 hover:rotate-0 transition-transform">
+<!-- Washi Tape -->
+<div class="w-16 h-3.5 washi-tape absolute -top-2 left-1/2 -translate-x-1/2"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline-lg text-headline-lg font-bold text-[#1F2A44]">Double</span>
+<span class="material-symbols-outlined text-[#C8553D] text-[20px]" data-icon="door_front">door_front</span>
+</div>
+<p class="font-body-md text-body-md text-[#1F2A44] font-medium leading-snug">
+            Hidden double-bookings unnoticed until students collide at the doorway with opposing syllabi.
+          </p>
+<div class="mt-4 pt-2 border-t border-[#1F2A44]/20 font-label-code text-[11px] text-[#6B6A63]">
+            Physical hall clash rate: 31%
+          </div>
+</div>
+<!-- Sticky Note 3: Locked Doors & Search -->
+<div class="bg-[#FFE79A] border-[1.5px] border-[#1F2A44] rounded-sm p-5 sticky-note-shadow relative transform -rotate-1.5 hover:rotate-0 transition-transform">
+<!-- Washi Tape -->
+<div class="w-16 h-3.5 washi-tape absolute -top-2 left-1/2 -translate-x-1/2"></div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline-lg text-headline-lg font-bold text-[#1F2A44]">Locked</span>
+<span class="material-symbols-outlined text-[#C8553D] text-[20px]" data-icon="lock_clock">lock_clock</span>
+</div>
+<p class="font-body-md text-body-md text-[#1F2A44] font-medium leading-snug">
+            Students stranded at locked doors while professors search frantically for unreserved empty spaces.
+          </p>
+<div class="mt-4 pt-2 border-t border-[#1F2A44]/20 font-label-code text-[11px] text-[#6B6A63]">
+            Unassigned room walkouts: Common
+          </div>
+</div>
+</div>
+</div>
+<!-- SEAMLESS CONTINUATION TO NEXT SECTION (No Hard Page Break) -->
+<div class="pl-14 md:pl-16 mt-16 pt-8 border-t border-[#1F2A44]/15 flex items-center justify-between text-[#6B6A63]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#2F5DA8] animate-bounce" data-icon="south">south</span>
+<span class="font-label-code text-body-sm font-medium text-[#1F2A44]">
+          Continuing to 02 / PARSE (Natural Language Conflict Extraction)...
+        </span>
+</div>
+<div class="font-label-code text-body-sm">
+        Next node: Tokenized Clause Ingestion
+      </div>
+</div>
+</main>
+
+
+</body></html>

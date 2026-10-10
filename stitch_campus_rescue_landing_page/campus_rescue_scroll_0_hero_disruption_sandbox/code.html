@@ -1,0 +1,375 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Campus Rescue — Academic Schedule Repair Engine</title>
+<!-- Google Fonts: Newsreader, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,600&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#acc7ff",
+            "primary-fixed": "#d7e2ff",
+            "on-tertiary-fixed": "#261a00",
+            "surface-container": "#f1eee5",
+            "background": "#fcf9f0",
+            "tertiary-fixed-dim": "#f0c04f",
+            "surface-container-low": "#f6f3ea",
+            "on-secondary-container": "#56607d",
+            "on-background": "#1c1c17",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#0f1b34",
+            "on-primary-fixed": "#001a40",
+            "on-tertiary-container": "#ffd271",
+            "on-surface-variant": "#434751",
+            "surface-tint": "#2f5da8",
+            "primary-container": "#2f5da8",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#ebe8df",
+            "secondary": "#535e7b",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#e5e2da",
+            "secondary-container": "#d1dcfe",
+            "surface-dim": "#dddad1",
+            "inverse-primary": "#acc7ff",
+            "secondary-fixed-dim": "#bbc6e7",
+            "secondary-fixed": "#d9e2ff",
+            "inverse-surface": "#31312b",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#ffdf9e",
+            "on-secondary-fixed-variant": "#3b4662",
+            "on-primary-fixed-variant": "#0a458f",
+            "on-secondary": "#ffffff",
+            "surface": "#fcf9f0",
+            "on-surface": "#1c1c17",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2da",
+            "inverse-on-surface": "#f4f1e8",
+            "primary": "#0a458f",
+            "on-tertiary-fixed-variant": "#5b4300",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#c8d9ff",
+            "tertiary": "#5b4300",
+            "outline": "#737782",
+            "tertiary-container": "#785900",
+            "surface-bright": "#fcf9f0",
+            "outline-variant": "#c3c6d3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Newsreader", "serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "stamp-badge": ["JetBrains Mono", "monospace"],
+            "headline-xl": ["Newsreader", "serif"],
+            "headline-md": ["Newsreader", "serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-lg": ["Newsreader", "serif"],
+            "label-code": ["JetBrains Mono", "monospace"],
+            "body-md": ["Inter", "sans-serif"]
+          },
+          "fontSize": {
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "stamp-badge": ["11px", { "lineHeight": "12px", "letterSpacing": "0.12em", "fontWeight": "700" }],
+            "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-code": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    /* Continuous Drafting Grid Paper Background */
+    .drafting-paper-grid {
+      background-color: #F6F1E7;
+      background-size: 20px 20px;
+      background-image: 
+        linear-gradient(to right, #E6DDCB 1px, transparent 1px),
+        linear-gradient(to bottom, #E6DDCB 1px, transparent 1px);
+    }
+
+    /* Handcrafted tactile paper shadows */
+    .tactile-card-shadow {
+      box-shadow: 4px 4px 0px rgba(31, 42, 68, 0.12);
+    }
+    .tactile-button-shadow {
+      box-shadow: 3px 3px 0px #1F2A44;
+    }
+    .tactile-secondary-shadow {
+      box-shadow: 2px 2px 0px rgba(31, 42, 68, 0.2);
+    }
+    .tactile-clip-shadow {
+      filter: drop-shadow(1px 2px 1px rgba(31, 42, 68, 0.18));
+    }
+    .marker-underline {
+      background: linear-gradient(180deg, transparent 65%, rgba(47, 93, 168, 0.28) 65%);
+    }
+    .highlighter-strip {
+      background-color: #E9B949;
+    }
+  </style>
+</head>
+<body class="drafting-paper-grid text-[#1F2A44] min-h-screen relative antialiased selection:bg-[#FFE79A] selection:text-[#1F2A44] overflow-x-hidden">
+<!-- STORY THREAD (Anchor x=72px continuous ledger tracker) -->
+
+<!-- NAVBAR (Scroll 0% state: 88px tall, transparent parchment feel) -->
+<header class="w-full h-16 bg-[#F6F1E7]/90 backdrop-blur-sm border-b border-[#1F2A44]/20 sticky top-0 z-40 transition-all duration-200">
+  <div class="max-w-[1200px] mx-auto px-margin h-full flex items-center justify-between gap-4">
+    <!-- Brand Cluster -->
+    <div class="flex items-center gap-3 shrink-0">
+      <div class="w-8 h-8 rounded-sm bg-[#FFFCF5] border-[1.5px] border-[#1F2A44] flex items-center justify-center tactile-secondary-shadow">
+        <svg class="w-5 h-5 text-[#2F5DA8]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <rect height="18" rx="1" width="18" x="3" y="3"></rect>
+          <path d="M3 9h18M3 15h18M9 3v18M15 3v18" stroke-dasharray="1 1"></path>
+        </svg>
+      </div>
+      <a class="font-headline-md text-[19px] font-bold tracking-tight text-[#1F2A44] flex items-baseline gap-1.5" href="#">
+        <span class="">Campus Rescue</span>
+        <span class="font-label-code text-[11px] font-medium tracking-normal text-[#6B6A63]">/ z3.core</span>
+      </a>
+    </div>
+
+    <!-- Standard Navigation Links -->
+    <nav class="hidden lg:flex items-center gap-7 text-[#6B6A63] font-body-md text-[13px] font-medium">
+      <a class="hover:text-[#1F2A44] transition-colors" href="#problem">Problem</a>
+      <a class="hover:text-[#1F2A44] transition-colors" href="#features">Features</a>
+      <a class="hover:text-[#1F2A44] transition-colors" href="#how-it-works">How It Works</a>
+      <a class="hover:text-[#1F2A44] transition-colors" href="#simulator">Simulator</a>
+      <a class="hover:text-[#1F2A44] transition-colors" href="#why-us">Why Us</a>
+      <a class="hover:text-[#1F2A44] transition-colors" href="#docs">Docs</a>
+    </nav>
+
+    <!-- Right Side: Engine Version Badge, 5 Pipeline Stamps & Primary CTA -->
+    <div class="flex items-center gap-3.5 shrink-0">
+      <!-- Version Badge -->
+      <div class="hidden xl:flex items-center gap-1.5 bg-[#FFFCF5] border border-[#1F2A44]/30 px-2 py-0.5 rounded-[3px] text-[10px] font-label-code text-[#434751]">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#5E8C61]"></span>
+        <span class="">SMT/Z3 CORE v4.12</span>
+      </div>
+
+      <!-- 5 Circular Pipeline Stamps (Disruption, Parse, Solve, Verify, Broadcast) -->
+      <div class="hidden sm:flex items-center gap-1 px-2 py-1 bg-[#FFFCF5] border border-[#1F2A44]/25 rounded-[3px] shadow-[1px_1px_0px_rgba(31,42,68,0.08)]" title="Pipeline Stages">
+        <span class="w-4 h-4 rounded-full bg-[#FFE79A] text-[#785900] text-[8px] font-bold font-label-code flex items-center justify-center border border-[#1F2A44]/40" title="1. Disruption">1</span>
+        <span class="w-4 h-4 rounded-full bg-[#F1ECE1] text-[#434751] text-[8px] font-bold font-label-code flex items-center justify-center border border-[#1F2A44]/30" title="2. Parse">2</span>
+        <span class="w-4 h-4 rounded-full bg-[#2F5DA8] text-[#FFFCF5] text-[8px] font-bold font-label-code flex items-center justify-center border border-[#1F2A44]/40" title="3. Solve">3</span>
+        <span class="w-4 h-4 rounded-full bg-[#5E8C61] text-[#FFFCF5] text-[8px] font-bold font-label-code flex items-center justify-center border border-[#1F2A44]/40" title="4. Verify">4</span>
+        <span class="w-4 h-4 rounded-full bg-[#F1ECE1] text-[#434751] text-[8px] font-bold font-label-code flex items-center justify-center border border-[#1F2A44]/30" title="5. Broadcast">5</span>
+      </div>
+
+      <!-- Primary CTA Button -->
+      <button class="bg-[#2F5DA8] hover:bg-[#254b88] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none text-[#FFFCF5] font-body-md text-[13px] font-semibold px-3.5 py-1.5 rounded-[4px] border-[1.5px] border-[#1F2A44] tactile-button-shadow transition-all flex items-center gap-1.5 cursor-pointer">
+        <span class="">Simulate a Disruption</span>
+        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+</header>
+<!-- HERO SECTION CANVAS (Scroll Position 0%) -->
+<main class="max-w-[1200px] mx-auto px-margin pt-6 pb-20 relative z-20">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center min-h-[calc(100vh-140px)]">
+<!-- Left Column: Editorial & Formal Narrative (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col justify-center space-y-6 lg:pr-4">
+<!-- Stamped Pill Badge -->
+<div class="inline-flex items-center self-start gap-2 bg-[#FFFCF5] border-[1.5px] border-[#1F2A44] px-3 py-1 rounded-[3px] shadow-[2px_2px_0px_rgba(31,42,68,0.12)]">
+<span class="w-2 h-2 rounded-full bg-[#5E8C61] animate-pulse"></span>
+<span class="font-stamp-badge text-stamp-badge text-[#1F2A44] tracking-wider">
+            GOOGLE GEMMA + Z3 SMT CONSTRAINT ENGINE
+          </span>
+</div>
+<!-- H1 Headline (Newsreader 56px, ink #1F2A44) -->
+<h1 class="font-headline-xl text-[48px] md:text-[56px] leading-[1.08] text-[#1F2A44] font-bold tracking-tight">
+          When Campus Plans Break, We Repair Them 
+          <span class="relative inline-block px-1">
+<span class="relative z-10">Mathematically.</span>
+<span class="absolute bottom-1.5 left-0 right-0 h-3.5 bg-[#2F5DA8]/25 -rotate-1 rounded-sm -z-0"></span>
+</span>
+</h1>
+<!-- Subheadline (Inter 18px, graphite #6B6A63) -->
+<p class="font-body-lg text-[18px] leading-[27px] text-[#6B6A63] max-w-[620px]">
+          Rooms flood. Attendance surges. Professors get delayed. Most tools make you rebuild the timetable or guess on WhatsApp. <strong class="text-[#1F2A44] font-medium">Campus Rescue</strong> reads the disruption in plain English and calculates the minimal-change fix, with guaranteed zero double-bookings.
+        </p>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<!-- Primary Button -->
+<button class="bg-[#2F5DA8] hover:bg-[#254b88] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none text-[#FFFCF5] font-body-md font-semibold px-6 py-3.5 rounded-[4px] border-2 border-[#1F2A44] tactile-button-shadow transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+<span class="">Simulate a Campus Disruption</span>
+</button>
+<!-- Secondary Button (Paper Sheet) -->
+<button class="bg-[#FFFCF5] hover:bg-[#F6F1E7] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none text-[#1F2A44] font-body-md font-semibold px-5 py-3.5 rounded-[4px] border-2 border-[#1F2A44] tactile-secondary-shadow transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="">See How It Works</span>
+</button>
+</div>
+<!-- Trust Chips Row (Three stamped ledger chips) -->
+<div class="pt-4 border-t border-[#1F2A44]/20 flex flex-wrap items-center gap-3">
+<!-- Chip 1: Sage shield -->
+<div class="bg-[#FFFCF5] border border-[#1F2A44]/40 px-2.5 py-1.5 rounded-[3px] flex items-center gap-2 shadow-[1px_1px_0px_rgba(31,42,68,0.1)]">
+<span class="material-symbols-outlined text-[16px] text-[#5E8C61]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-code text-[12px] text-[#1F2A44]">Runs 100% locally</span>
+</div>
+<!-- Chip 2: Lock -->
+<div class="bg-[#FFFCF5] border border-[#1F2A44]/40 px-2.5 py-1.5 rounded-[3px] flex items-center gap-2 shadow-[1px_1px_0px_rgba(31,42,68,0.1)]">
+<span class="material-symbols-outlined text-[16px] text-[#2F5DA8]" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="font-label-code text-[12px] text-[#1F2A44]">Zero hallucinated rooms</span>
+</div>
+<!-- Chip 3: Stopwatch -->
+<div class="bg-[#FFFCF5] border border-[#1F2A44]/40 px-2.5 py-1.5 rounded-[3px] flex items-center gap-2 shadow-[1px_1px_0px_rgba(31,42,68,0.1)]">
+<span class="material-symbols-outlined text-[16px] text-[#785900]" style="font-variation-settings: 'FILL' 1;">timer</span>
+<span class="font-label-code text-[12px] text-[#1F2A44]">Under 500 ms solve</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Live Disruption Sandbox Card (5 Cols) -->
+<div class="lg:col-span-5 relative mt-6 lg:mt-0">
+<!-- Physical Paper Card -->
+<div class="relative bg-[#FFFCF5] border-[1.5px] border-[#1F2A44] rounded-md p-6 tactile-card-shadow">
+<!-- Top-Left Paperclip Graphic -->
+<div class="absolute -top-3.5 left-8 w-6 h-10 pointer-events-none z-30 tactile-clip-shadow">
+<svg class="w-full h-full text-[#737782]" fill="none" viewBox="0 0 24 48">
+<path d="M8 8v28a5 5 0 0 0 10 0V10a3.5 3.5 0 0 0-7 0v24a2 2 0 0 0 4 0V12" stroke="#535e7b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+</svg>
+</div>
+<!-- Sandbox Header Slip -->
+<div class="flex items-center justify-between pb-3 mb-4 border-b border-[#1F2A44]/15">
+<div class="flex items-center gap-2 pl-6">
+<span class="w-2.5 h-2.5 rounded-full bg-[#E9B949] border border-[#1F2A44]"></span>
+<span class="font-headline-sm text-[16px] text-[#1F2A44] font-semibold">Live Disruption Sandbox</span>
+</div>
+<span class="font-label-code text-[11px] text-[#6B6A63] bg-[#F1ECE1] px-2 py-0.5 rounded border border-[#1F2A44]/20">DEMO #204-B</span>
+</div>
+<!-- Section 1: Plain English Disruption Input Slip -->
+<div class="bg-[#FBF7EE] border border-[#1F2A44]/30 rounded p-3 mb-4 relative">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-code text-[11px] text-[#785900] font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">record_voice_over</span> Incident Dispatch
+              </span>
+<span class="font-label-code text-[10px] text-[#6B6A63]">13:42 EST</span>
+</div>
+<p class="font-label-code text-[12px] leading-relaxed text-[#1F2A44] bg-[#FFFCF5] p-2.5 border border-[#1F2A44]/20 rounded font-medium">
+              “Robotics Lab A has an AC water leak after 2 PM. Protect the Coding Assessment.”
+            </p>
+</div>
+<!-- Hand-drawn arrow strip pointing downward -->
+<div class="flex items-center justify-center my-3 text-[#6B6A63] gap-2">
+<div class="h-px bg-dashed border-b border-dashed border-[#1F2A44]/40 flex-1"></div>
+<div class="bg-[#FFE79A] border border-[#1F2A44] px-2.5 py-0.5 rounded-[2px] text-[11px] font-label-code text-[#1F2A44] flex items-center gap-1 shadow-sm">
+<span class="">Gemma JSON</span>
+<span class="material-symbols-outlined text-[12px]">arrow_right_alt</span>
+<span class="font-bold text-[#2F5DA8]">Z3 SMT Solver</span>
+</div>
+<div class="h-px bg-dashed border-b border-dashed border-[#1F2A44]/40 flex-1"></div>
+</div>
+<!-- Section 2: Mathematical Result Slip -->
+<div class="relative bg-[#FFFCF5] border border-[#1F2A44]/30 rounded p-3.5 space-y-3">
+<!-- Rubber Stamp Badge: VERIFIED (Tilted green rubber stamp) -->
+<div class="absolute -top-3.5 right-4 z-20 pointer-events-none transform -rotate-3">
+<div class="border-2 border-[#5E8C61] px-2 py-0.5 rounded-[2px] bg-[#FFFCF5] shadow-sm">
+<span class="font-stamp-badge text-[11px] font-bold text-[#5E8C61] tracking-widest uppercase">
+                  VERIFIED
+                </span>
+</div>
+</div>
+<!-- Resolution Summary Line -->
+<div class="text-[12px] font-body-md text-[#1F2A44] font-medium pr-16 leading-tight">
+              Feasible Plan Found · <strong class="text-[#2F5DA8]">1 event moved</strong> · 0 mins delayed · 0 rule violations
+            </div>
+<!-- Repair Items Breakdown -->
+<div class="space-y-2 pt-1 font-label-code text-[12px]">
+<!-- Item 1: Relocated with Highlighter Band -->
+<div class="relative p-2 rounded border border-[#1F2A44]/25 bg-[#FFF9E6] overflow-hidden">
+<div class="absolute inset-x-0 bottom-0 h-1.5 highlighter-strip"></div>
+<div class="flex items-start justify-between">
+<div>
+<span class="text-[10px] uppercase font-bold text-[#785900] tracking-wider block mb-0.5">RELOCATED</span>
+<span class="text-[#1F2A44] font-bold">Robotics Workshop</span>
+</div>
+<span class="text-[11px] bg-[#FFE79A] text-[#1F2A44] px-1.5 py-0.2 rounded border border-[#1F2A44]/30">Δ minimal</span>
+</div>
+<div class="mt-1 flex items-center gap-1.5 text-[11px] text-[#434751]">
+<span class="line-through text-[#6B6A63]">Lab A (14:00)</span>
+<span class="material-symbols-outlined text-[13px] text-[#2F5DA8]">trending_flat</span>
+<strong class="text-[#1F2A44] bg-[#FFE79A]/80 px-1 rounded">Maker Lab D (14:00)</strong>
+</div>
+</div>
+<!-- Item 2: Protected with Lock Badge -->
+<div class="p-2 rounded border border-[#5E8C61]/50 bg-[#F4F8F4] flex items-center justify-between">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-[#5E8C61]" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span class="text-[#1F2A44] font-bold">Coding Assessment</span>
+</div>
+<div class="text-[11px] text-[#5E8C61] mt-0.5">
+                    Protected in Lab B (Unchanged)
+                  </div>
+</div>
+<span class="font-stamp-badge text-[10px] text-[#5E8C61] border border-[#5E8C61] px-1.5 py-0.5 rounded-[2px] bg-[#FFFCF5]">LOCKED</span>
+</div>
+</div>
+<!-- Small Execution Stamp Footer -->
+<div class="pt-2 border-t border-[#1F2A44]/15 flex items-center justify-between text-[11px] text-[#6B6A63] font-label-code">
+<span class="">SMT Cost Index: 1.000</span>
+<span class="text-[#5E8C61] font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#5E8C61]"></span> Solved in 28ms
+              </span>
+</div>
+</div>
+<!-- Bottom Memo Note Tag -->
+<div class="mt-3 flex items-center justify-between text-[11px] font-body-sm text-[#6B6A63]">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">history_edu</span> Formal Proof ID: CR-8942
+            </span>
+<span class="underline decoration-1 cursor-pointer hover:text-[#1F2A44]">Inspect SAT Clauses</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom of Viewport: Hand-Drawn Bouncing Indicator -->
+<div class="pt-8 pb-4 flex flex-col items-center justify-center text-center">
+<a class="group flex flex-col items-center gap-1.5 text-[#6B6A63] hover:text-[#1F2A44] transition-colors" href="#problem">
+<span class="font-label-code text-[11px] uppercase tracking-wider text-[#6B6A63] group-hover:text-[#1F2A44]">
+          Scroll to see how it works
+        </span>
+<div class="w-7 h-7 rounded-full bg-[#FFFCF5] border border-[#1F2A44]/40 flex items-center justify-center shadow-sm group-hover:translate-y-0.5 transition-transform animate-bounce">
+<span class="material-symbols-outlined text-[16px] text-[#1F2A44]">south</span>
+</div>
+</a>
+</div>
+</main>
+<!-- Continuous Tear-Off Perforation Divider at Fold Exit -->
+<div class="w-full relative py-2">
+<div class="max-w-[1200px] mx-auto px-margin">
+<div class="w-full border-b-2 border-dashed border-[#6B6A63]/50"></div>
+</div>
+</div>
+
+
+</body></html>

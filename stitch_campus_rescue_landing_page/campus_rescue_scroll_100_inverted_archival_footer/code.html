@@ -1,0 +1,423 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Campus Rescue — Dark Archival Ledger (100% Scroll)</title>
+<!-- Material Symbols & Typography Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "primary-fixed-dim": "#acc7ff",
+            "primary-fixed": "#d7e2ff",
+            "on-tertiary-fixed": "#261a00",
+            "surface-container": "#f1eee5",
+            "background": "#fcf9f0",
+            "tertiary-fixed-dim": "#f0c04f",
+            "surface-container-low": "#f6f3ea",
+            "on-secondary-container": "#56607d",
+            "on-background": "#1c1c17",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed": "#0f1b34",
+            "on-primary-fixed": "#001a40",
+            "on-tertiary-container": "#ffd271",
+            "on-surface-variant": "#434751",
+            "surface-tint": "#2f5da8",
+            "primary-container": "#2f5da8",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#ebe8df",
+            "secondary": "#535e7b",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#e5e2da",
+            "secondary-container": "#d1dcfe",
+            "surface-dim": "#dddad1",
+            "inverse-primary": "#acc7ff",
+            "secondary-fixed-dim": "#bbc6e7",
+            "secondary-fixed": "#d9e2ff",
+            "inverse-surface": "#31312b",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#ffdf9e",
+            "on-secondary-fixed-variant": "#3b4662",
+            "on-primary-fixed-variant": "#0a458f",
+            "on-secondary": "#ffffff",
+            "surface": "#fcf9f0",
+            "on-surface": "#1c1c17",
+            "on-error": "#ffffff",
+            "surface-variant": "#e5e2da",
+            "inverse-on-surface": "#f4f1e8",
+            "primary": "#0a458f",
+            "on-tertiary-fixed-variant": "#5b4300",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#c8d9ff",
+            "tertiary": "#5b4300",
+            "outline": "#737782",
+            "tertiary-container": "#785900",
+            "surface-bright": "#fcf9f0",
+            "outline-variant": "#c3c6d3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "2.5rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Newsreader"],
+            "body-sm": ["Inter"],
+            "stamp-badge": ["JetBrains Mono"],
+            "headline-xl": ["Newsreader"],
+            "headline-md": ["Newsreader"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Newsreader"],
+            "label-code": ["JetBrains Mono"],
+            "body-md": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "stamp-badge": ["11px", { "lineHeight": "12px", "letterSpacing": "0.12em", "fontWeight": "700" }],
+            "headline-xl": ["44px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-code": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Technical Gridlines for Pre-Perforation paper stock */
+    .bg-paper-grid {
+      background-color: #F6F1E7;
+      background-image: 
+        linear-gradient(to right, #E6DDCB 1px, transparent 1px),
+        linear-gradient(to bottom, #E6DDCB 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    
+    /* Dark archival desk blotter texture */
+    .bg-archival-blotter {
+      background-color: #1F2A44;
+      background-image: radial-gradient(circle at 50% 0%, #253352 0%, #1F2A44 75%);
+    }
+
+    .perforation-line {
+      border-top: 2px dashed #E6DDCB;
+    }
+
+    .gold-highlighter-stroke {
+      position: relative;
+    }
+    .gold-highlighter-stroke::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background-color: #E9B949;
+      opacity: 0.85;
+      z-index: -1;
+      transform: rotate(-0.5deg);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background selection:bg-tertiary-fixed selection:text-on-tertiary-fixed antialiased min-h-screen relative flex flex-col justify-between overflow-x-hidden">
+<!-- INVERTED TOP APP BAR (SCROLL POSITION: 100%) -->
+<header class="sticky top-0 w-full z-50 bg-[#1F2A44] text-[#F6F1E7] border-b border-[#2F5DA8] shadow-[0_6px_20px_rgba(0,0,0,0.35)] transition-all">
+<div class="max-w-[1200px] mx-auto px-margin flex items-center justify-between h-16">
+<!-- Brand Logo / Wordmark -->
+<div class="flex items-center gap-space-md">
+<a class="flex items-center gap-2 group" href="#top"><div class="w-8 h-8 rounded border border-[#2F5DA8] bg-[#162035] flex items-center justify-center text-[#acc7ff] shadow-[2px_2px_0px_#2F5DA8]"><span class="material-symbols-outlined text-[18px]" data-icon="grid_4x4">grid_4x4</span></div><div class="flex items-baseline gap-1.5"><span class="font-headline-md text-headline-md font-bold text-[#F6F1E7] tracking-tight">Campus Rescue</span><span class="font-label-code text-[11px] text-[#acc7ff]/70 tracking-wider font-semibold">z3.core</span></div></a>
+<span class="hidden lg:inline-block px-2 py-0.5 border border-[#5E8C61] text-[#5E8C61] font-stamp-badge text-stamp-badge tracking-widest uppercase rotate-[-1deg]">
+          ARCHIVE DEPLOYED
+        </span>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-6 text-[#F6F1E7] font-body-md text-body-md">
+<a class="hover:text-primary-fixed transition-colors" href="#problem">Problem</a>
+<a class="hover:text-primary-fixed transition-colors" href="#features">Features</a>
+<a class="hover:text-primary-fixed transition-colors" href="#how-it-works">How It Works</a>
+<a class="hover:text-primary-fixed transition-colors" href="#simulator">Simulator</a>
+<a class="hover:text-primary-fixed transition-colors" href="#why-us">Why Us</a>
+<a class="gold-highlighter-stroke font-semibold text-[#FFFCF5]" href="#docs">Docs</a>
+</nav>
+<!-- Story Stamps Tracker & Trailing Action -->
+<div class="flex items-center gap-space-md">
+<!-- Story Stamps Tracker: All 5 Sage Green Filled -->
+<div class="hidden xl:flex items-center gap-1.5 px-3 py-1 bg-[#162035] rounded-full border border-[#2F5DA8]/40" title="All 5 verification proof stamps secured">
+<span class="font-label-code text-body-sm text-[#F6F1E7]/70 mr-1">STAMPS:</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#5E8C61] ring-2 ring-[#5E8C61]/30"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#5E8C61] ring-2 ring-[#5E8C61]/30"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#5E8C61] ring-2 ring-[#5E8C61]/30"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#5E8C61] ring-2 ring-[#5E8C61]/30"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#5E8C61] ring-2 ring-[#5E8C61]/30"></span>
+</div>
+<!-- Back to Top Flat Paper CTA -->
+<a class="flex items-center gap-2 group" href="#top"><div class="w-8 h-8 rounded border border-[#2F5DA8] bg-[#162035] flex items-center justify-center text-[#acc7ff] shadow-[2px_2px_0px_#2F5DA8]"><span class="material-symbols-outlined text-[18px]" data-icon="grid_4x4">grid_4x4</span></div><div class="flex items-baseline gap-1.5"><span class="font-headline-md text-headline-md font-bold text-[#F6F1E7] tracking-tight">Campus Rescue</span><span class="font-label-code text-[11px] text-[#acc7ff]/70 tracking-wider font-semibold">z3.core</span></div></a>
+</div>
+</div>
+<!-- 100% Full-Width Blueprint Progress Line -->
+<div class="w-full h-[3px] bg-[#2F5DA8] shadow-[0_0_8px_#2F5DA8]"></div>
+</header>
+<!-- STORY THREAD MARGIN INDICATOR (Desktop x=72px pen line terminating) -->
+<div class="hidden xl:block absolute left-[72px] top-16 bottom-[180px] pointer-events-none z-10">
+<div class="h-full border-l-2 border-dashed border-[#5E8C61]/60 flex flex-col justify-end items-center">
+<!-- Final Archival Rubber Stamp Termination -->
+<div class="translate-y-6 -translate-x-[50%] left-0 w-44 bg-[#162035] p-2 border-2 border-[#5E8C61] text-[#5E8C61] text-center rotate-[-2deg] shadow-[4px_4px_0px_rgba(0,0,0,0.5)]">
+<div class="font-stamp-badge text-stamp-badge uppercase tracking-wider leading-tight">
+          END OF DISPATCH
+        </div>
+<div class="font-label-code text-[9px] text-[#F6F1E7]/80 mt-0.5 tracking-tighter">
+          FORMAL PROOF ARCHIVED
+        </div>
+<div class="mt-1 pt-1 border-t border-[#5E8C61]/40 font-stamp-badge text-[10px] text-[#E9B949]">
+          FALL 2025 · CERTIFIED
+        </div>
+</div>
+</div>
+</div>
+<!-- TRANSITION SLICE (From Upper Cream Paper to Dark Blotter) -->
+<div class="w-full bg-paper-grid pt-16 pb-0">
+<div class="max-w-[1200px] mx-auto px-margin">
+<!-- Perforation Divider Sheet with Scissors -->
+<div class="relative flex items-center justify-center my-4">
+<div class="w-full perforation-line"></div>
+<div class="absolute px-3 bg-[#F6F1E7] border border-[#6B6A63] text-[#1F2A44] font-label-code text-body-sm flex items-center gap-1.5 shadow-[2px_2px_0px_rgba(31,42,68,0.15)]">
+<span class="material-symbols-outlined text-[14px]" data-icon="content_cut">content_cut</span>
+<span class="">TEAR SHEET AT PERFORATION // PERMANENT REGISTRAR ARCHIVE BELOW</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ARCHIVAL FOOTER MAIN CANVAS (Scroll 100% Permanent Ledger) -->
+<footer class="bg-archival-blotter text-[#F6F1E7] w-full border-t-2 border-[#2F5DA8] pt-12 pb-16 relative">
+<div class="max-w-[1200px] mx-auto px-margin">
+<!-- Top Archival Metadata Header Slip -->
+<div class="flex flex-wrap items-center justify-between gap-4 pb-8 mb-10 border-b border-[#2F5DA8]/40 text-[#c8d9ff]">
+<div class="flex items-center gap-space-sm font-label-code text-body-sm">
+<span class="material-symbols-outlined text-[#acc7ff] text-[18px]" data-icon="folder_zip">folder_zip</span>
+<span class="text-[#F6F1E7] font-semibold">REGISTRAR DISPATCH ARCHIVE</span>
+<span class="text-[#outline-variant]">/</span>
+<span class="text-[#E9B949]">SMT-PROOF-LOG-2025.A</span>
+</div>
+<div class="font-label-code text-body-sm text-[#F6F1E7]/70 flex items-center gap-4">
+<span class="">LATENCY: <strong class="text-[#5E8C61]">42ms</strong></span>
+<span class="">SOLVER MODEL: <strong class="text-[#acc7ff]">Z3-QBF/WASM</strong></span>
+<span class="">LOCATION: <strong class="text-[#F6F1E7]">AIR-GAPPED CLUSTER</strong></span>
+</div>
+</div>
+<!-- Four-Column Archival Directory -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-16">
+<!-- Column 1: Brand & Philosophy -->
+<div class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#acc7ff] text-headline-md" data-icon="terminal">terminal</span>
+<span class="font-headline-md text-headline-md font-bold text-[#FFFCF5] tracking-tight">Campus Rescue</span>
+</div>
+<p class="font-headline-sm text-headline-sm italic text-[#ffd271]">
+            "Repair the Day, Not the Whole Timetable."
+          </p>
+<p class="font-body-md text-body-md text-[#F6F1E7]/80 leading-relaxed">
+            Formally verified SAT/SMT scheduling pipelines for higher education. Neuro-symbolic architecture powered by Google Gemma and Z3 Theorem Prover.
+          </p>
+<div class="pt-2">
+<span class="inline-block px-2.5 py-1.5 bg-[#162035] border border-[#2F5DA8] font-label-code text-[11px] text-[#acc7ff] rounded-sm">
+              [EDITION: ARCHIVAL 2025.1 · LEDGER #889-ACAD]
+            </span>
+</div>
+</div>
+<!-- Column 2: Sections & Navigation -->
+<div class="space-y-3">
+<h4 class="font-label-code text-label-code uppercase tracking-widest text-[#acc7ff] font-bold border-b border-[#2F5DA8]/40 pb-2">
+            Ledger Sections
+          </h4>
+<ul class="space-y-2.5 font-body-md text-body-md">
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center gap-2 text-[#F6F1E7]/90 transition-colors" href="#problem">
+<span class="font-label-code text-[11px] text-[#acc7ff]">01</span>
+<span class="">Problem Statement</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center gap-2 text-[#F6F1E7]/90 transition-colors" href="#features">
+<span class="font-label-code text-[11px] text-[#acc7ff]">02</span>
+<span class="">Features &amp; Roles</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center gap-2 text-[#F6F1E7]/90 transition-colors" href="#how-it-works">
+<span class="font-label-code text-[11px] text-[#acc7ff]">03</span>
+<span class="">How It Works</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center gap-2 text-[#F6F1E7]/90 transition-colors" href="#simulator">
+<span class="font-label-code text-[11px] text-[#acc7ff]">04</span>
+<span class="">Interactive Simulator</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center gap-2 text-[#F6F1E7]/90 transition-colors" href="#why-us">
+<span class="font-label-code text-[11px] text-[#acc7ff]">05</span>
+<span class="">Why Chatbots Fail</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center gap-2 text-[#FFFCF5] font-semibold transition-colors" href="#docs">
+<span class="font-label-code text-[11px] text-[#E9B949]">06</span>
+<span class="">Documentation &amp; Specs</span>
+<span class="material-symbols-outlined text-[14px] text-[#E9B949]" data-icon="arrow_outward">arrow_outward</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Column 3: Campus Roles -->
+<div class="space-y-3">
+<h4 class="font-label-code text-label-code uppercase tracking-widest text-[#acc7ff] font-bold border-b border-[#2F5DA8]/40 pb-2">
+            Campus Portals
+          </h4>
+<ul class="space-y-2.5 font-body-md text-body-md">
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center justify-between text-[#F6F1E7]/90 transition-colors" href="#student">
+<span class="">Student Live Sync</span>
+<span class="font-label-code text-[10px] text-[#5E8C61] bg-[#5E8C61]/20 px-1 py-0.5 rounded">ONLINE</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center justify-between text-[#F6F1E7]/90 transition-colors" href="#faculty">
+<span class="">Faculty Delay Console</span>
+<span class="font-label-code text-[10px] text-[#5E8C61] bg-[#5E8C61]/20 px-1 py-0.5 rounded">ONLINE</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center justify-between text-[#F6F1E7]/90 transition-colors" href="#registrar">
+<span class="">Registrar SMT Prover</span>
+<span class="font-label-code text-[10px] text-[#acc7ff] bg-[#2F5DA8]/40 px-1 py-0.5 rounded">STRICT</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center justify-between text-[#F6F1E7]/90 transition-colors" href="#dispatch">
+<span class="">Emergency Dispatch Daemon</span>
+<span class="font-label-code text-[10px] text-[#E9B949] bg-[#E9B949]/20 px-1 py-0.5 rounded">STANDBY</span>
+</a>
+</li>
+<li class="">
+<a class="hover:text-[#ffd271] hover:underline underline-offset-4 flex items-center justify-between text-[#F6F1E7]/90 transition-colors" href="#deployment">
+<span class="">Air-Gapped Deployment Guide</span>
+<span class="font-label-code text-[10px] text-[#F6F1E7]/60">v2.4</span>
+</a>
+</li>
+</ul>
+</div>
+<!-- Column 4: Open Source & Attribution -->
+<div class="space-y-3">
+<h4 class="font-label-code text-label-code uppercase tracking-widest text-[#acc7ff] font-bold border-b border-[#2F5DA8]/40 pb-2">
+            Verification &amp; Provenance
+          </h4>
+<div class="p-3 bg-[#162035] border border-[#2F5DA8] rounded-sm space-y-2">
+<a class="font-label-code text-body-sm text-[#FFFCF5] hover:text-[#ffd271] flex items-center gap-2" href="https://github.com/campus-rescue/engine" rel="noopener" target="_blank">
+<span class="material-symbols-outlined text-[16px]" data-icon="code">code</span>
+<span class="">github.com/campus-rescue/engine</span>
+</a>
+<p class="font-body-sm text-body-sm text-[#F6F1E7]/80 leading-snug">
+              Built for <strong class="text-[#ffd271]">Hacktoberfest IITB</strong> &amp; the <strong class="text-[#ffd271]">Google Gemma Open-Weights Challenge</strong>.
+            </p>
+</div>
+<!-- Proof Badges -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<div class="p-1.5 border border-[#5E8C61]/50 bg-[#162035] font-stamp-badge text-[10px] text-[#5E8C61] text-center rounded-sm">
+              Google Gemma 2B/9B
+            </div>
+<div class="p-1.5 border border-[#2F5DA8] bg-[#162035] font-stamp-badge text-[10px] text-[#acc7ff] text-center rounded-sm">
+              Z3 SMT v4.12.2
+            </div>
+<div class="p-1.5 border border-[#E9B949]/50 bg-[#162035] font-stamp-badge text-[10px] text-[#ffd271] text-center rounded-sm">
+              Apache 2.0 Open Source
+            </div>
+<div class="p-1.5 border border-[#F6F1E7]/40 bg-[#162035] font-stamp-badge text-[10px] text-[#F6F1E7] text-center rounded-sm">
+              FERPA 100% Offline
+            </div>
+</div>
+</div>
+</div>
+<!-- Formal Proof Archival Memo Card (Tactile Stationery Layer) -->
+<div class="bg-[#18233c] border-2 border-[#2F5DA8] p-6 rounded shadow-[4px_4px_0px_#000000] mb-12 relative overflow-hidden">
+<div class="absolute right-4 top-4 rotate-12 opacity-80 pointer-events-none">
+<div class="border-2 border-[#5E8C61] px-3 py-1 font-stamp-badge text-stamp-badge text-[#5E8C61] uppercase tracking-widest">
+            FORMALLY VERIFIED
+          </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div>
+<div class="font-label-code text-[11px] text-[#acc7ff] uppercase">Theorem Prover Assert</div>
+<div class="font-label-code text-body-sm text-[#FFFCF5] mt-1">∀t ∈ T: RoomCap(r, t) ≥ Enrolled(c)</div>
+<div class="font-body-sm text-body-sm text-[#F6F1E7]/70 mt-0.5">Checked across 1,840 scheduled room hours with zero hard-clash relaxations.</div>
+</div>
+<div>
+<div class="font-label-code text-[11px] text-[#acc7ff] uppercase">Gemma Structural Parser</div>
+<div class="font-label-code text-body-sm text-[#FFFCF5] mt-1">Lossless AST → SMT-LIB2 dialect</div>
+<div class="font-body-sm text-body-sm text-[#F6F1E7]/70 mt-0.5">Faculty emails and weather cancellations translated to formal constraints.</div>
+</div>
+<div>
+<div class="font-label-code text-[11px] text-[#acc7ff] uppercase">Archival Integrity Guarantee</div>
+<div class="font-label-code text-body-sm text-[#5E8C61] mt-1">SHA256: e8b94...f01ca (Verified)</div>
+<div class="font-body-sm text-body-sm text-[#F6F1E7]/70 mt-0.5">Timetable patch mathematically deterministic and fully reproducible.</div>
+</div>
+</div>
+</div>
+<!-- Bottom Copyright & Real-time Audit Bar -->
+<div class="pt-6 border-t border-[#2F5DA8]/40 flex flex-col md:flex-row items-center justify-between gap-4 font-body-sm text-body-sm text-[#F6F1E7]/70">
+<div class="text-center md:text-left">
+<span class="">© 2025 Campus Rescue Academic Systems Inc. Formally verified SAT/SMT scheduling pipelines. Printed on ledger archival stock. All timetable states verified against first-order predicate logic.</span>
+</div>
+<!-- Technical status indicators in typewriter pills -->
+<div class="flex flex-wrap items-center justify-center gap-2 font-label-code text-[11px]">
+<span class="px-2 py-1 bg-[#162035] text-[#5E8C61] border border-[#5E8C61]/40 rounded">
+            Solver Status: NOMINAL (SAT)
+          </span>
+<span class="px-2 py-1 bg-[#162035] text-[#acc7ff] border border-[#2F5DA8]/50 rounded">
+            Local WASM Sandbox: ACTIVE
+          </span>
+<span class="px-2 py-1 bg-[#162035] text-[#ffd271] border border-[#E9B949]/40 rounded">
+            Telemetry: 0 BYTES TRANSMITTED
+          </span>
+</div>
+</div>
+</div>
+</footer>
+<!-- Interactive Scroll Behavior Script -->
+<script>
+    // Smooth back-to-top handler
+    document.querySelectorAll('a[href^="#top"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+
+
+</body></html>

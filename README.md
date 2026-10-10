@@ -9,6 +9,13 @@
 
 ---
 
+### 🌐 Standalone Frontend Landing Page
+Open `index.html` directly in any modern desktop browser (double-click, no install, no build step, no server, no backend, no database, no API keys).
+Designed for 1440px academic workbench drafting monitors (fluid from 1280px to 1920px).
+All constraint resolution, SMT parsing simulations, day grid repairs, and RFC-5545 .ics generation run locally in pure vanilla JavaScript.
+
+---
+
 ## 🚀 Key Features
 
 1. **Natural Language Room Requests:** Submit requests in conversational English (e.g., *"Need a room for 35 people for a 2-hour Robotics workshop with electronics kits"*). Gemma 4 extracts equipment, duration, and capacity constraints into structured JSON.
